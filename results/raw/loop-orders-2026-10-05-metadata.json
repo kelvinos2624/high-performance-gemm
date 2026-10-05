@@ -1,0 +1,76 @@
+{
+  "date": "2026-10-05",
+  "cpu": "Apple M2 Pro",
+  "architecture": "arm64",
+  "physical_cores": 12,
+  "logical_cores": 12,
+  "memory_bytes": 17179869184,
+  "os": "macOS 14.8.3 (23J220)",
+  "compiler": "Apple Clang 14.0.3 (clang-1403.0.22.14.1)",
+  "cmake": "4.4.4",
+  "build_type": "Release",
+  "native_arch": false,
+  "threads": 1,
+  "warmups": 1,
+  "repetitions": 5,
+  "sizes": [
+    64,
+    128,
+    256,
+    512,
+    1024
+  ],
+  "primary_command": "./build/release/gemm_benchmark --repetitions 5 64 128 256 512 1024",
+  "reverse_command": "python3 scripts/run_benchmarks.py --reverse --output results/raw/loop-orders-reverse-2026-10-05-apple-m2-pro.csv",
+  "notes": "No affinity, frequency, thermal or background-load controls; median samples only, not individual timings. Reverse sweep uses a new process per implementation/size.",
+  "compile_commands": [
+    {
+      "directory": "/Users/kelvinfeng/my_code/gemm/build/release",
+      "command": "/usr/bin/c++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=c++17 -o CMakeFiles/gemm.dir/src/matrix.cpp.o -c /Users/kelvinfeng/my_code/gemm/src/matrix.cpp",
+      "file": "/Users/kelvinfeng/my_code/gemm/src/matrix.cpp",
+      "output": "CMakeFiles/gemm.dir/src/matrix.cpp.o"
+    },
+    {
+      "directory": "/Users/kelvinfeng/my_code/gemm/build/release",
+      "command": "/usr/bin/c++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=c++17 -o CMakeFiles/gemm.dir/src/gemm_reference.cpp.o -c /Users/kelvinfeng/my_code/gemm/src/gemm_reference.cpp",
+      "file": "/Users/kelvinfeng/my_code/gemm/src/gemm_reference.cpp",
+      "output": "CMakeFiles/gemm.dir/src/gemm_reference.cpp.o"
+    },
+    {
+      "directory": "/Users/kelvinfeng/my_code/gemm/build/release",
+      "command": "/usr/bin/c++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=c++17 -o CMakeFiles/gemm.dir/src/gemm_naive.cpp.o -c /Users/kelvinfeng/my_code/gemm/src/gemm_naive.cpp",
+      "file": "/Users/kelvinfeng/my_code/gemm/src/gemm_naive.cpp",
+      "output": "CMakeFiles/gemm.dir/src/gemm_naive.cpp.o"
+    },
+    {
+      "directory": "/Users/kelvinfeng/my_code/gemm/build/release",
+      "command": "/usr/bin/c++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=c++17 -o CMakeFiles/gemm.dir/src/gemm_loop_order.cpp.o -c /Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp",
+      "file": "/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp",
+      "output": "CMakeFiles/gemm.dir/src/gemm_loop_order.cpp.o"
+    },
+    {
+      "directory": "/Users/kelvinfeng/my_code/gemm/build/release",
+      "command": "/usr/bin/c++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=gnu++17 -o CMakeFiles/gemm_benchmark.dir/benchmarks/benchmark_main.cpp.o -c /Users/kelvinfeng/my_code/gemm/benchmarks/benchmark_main.cpp",
+      "file": "/Users/kelvinfeng/my_code/gemm/benchmarks/benchmark_main.cpp",
+      "output": "CMakeFiles/gemm_benchmark.dir/benchmarks/benchmark_main.cpp.o"
+    },
+    {
+      "directory": "/Users/kelvinfeng/my_code/gemm/build/release",
+      "command": "/usr/bin/c++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=gnu++17 -o CMakeFiles/gemm_tests.dir/tests/test_gemm.cpp.o -c /Users/kelvinfeng/my_code/gemm/tests/test_gemm.cpp",
+      "file": "/Users/kelvinfeng/my_code/gemm/tests/test_gemm.cpp",
+      "output": "CMakeFiles/gemm_tests.dir/tests/test_gemm.cpp.o"
+    }
+  ],
+  "source_sha256": {
+    "CMakeLists.txt": "3499f18ad63fd6dfbda617790b5ff6fffeab17b755689d47c79b6a6080448538",
+    "benchmarks/benchmark_main.cpp": "846801d324e909f617ae90993e0718a29f3700760e23813b75165c77cd780fc7",
+    "include/gemm/gemm.hpp": "1201a2e307c334bcab9f4cb8c807c530321991c1372dc77ab275bb743dc44b87",
+    "include/gemm/kernels.hpp": "dd48b384bd2116d7081efe00d6d0dde43e8df0ab32a1c9d86c1f51d5aee8936b",
+    "include/gemm/matrix.hpp": "1d52089e33f27c79b95101eab5cefaa45fe0f6879c58070a09a75865c4a5b64e",
+    "src/gemm_loop_order.cpp": "669eb79847bbe487fe170f0cf2829ff7f214ede42b238efda4fe18909203a1a2",
+    "src/gemm_naive.cpp": "6ef2969603cf62e791acb938117423959a0c3f186325a5653128a24ef1e146ce",
+    "src/gemm_reference.cpp": "8440ed04e1bdbf97934be41945810aeeccfbb6bde511c1673e4672640f6c9b81",
+    "src/matrix.cpp": "364e6555ddc2c17e1d5bc5197fe4fcf833250d9503a0f49757bdee6ea8089636",
+    "tests/test_gemm.cpp": "5c37b4c8572d40c728f04d92e1fd237fae26d052cad1cb843605b3c66f516461"
+  }
+}
