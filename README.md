@@ -2,8 +2,8 @@
 
 A C++17 performance-engineering project that starts with a correct, deliberately
 naive matrix multiplication and advances through measured experiments. This is
-**Milestone 3**: contiguous row-major `float` matrices, a scalar reference with
-double accumulation, all six loop orders, configurable cache blocking,
+**Milestone 4**: contiguous row-major `float` matrices, a scalar reference with
+double accumulation, all six loop orders, configurable cache and register blocking,
 correctness tests, and a CSV benchmark.
 The original `naive_ijk` remains the unchanged Milestone 1 kernel.
 
@@ -49,14 +49,17 @@ here, not an arbitrary numerical error guarantee.
 ./build/release/gemm_benchmark --implementation ikj --repetitions 7 512
 ./build/release/gemm_benchmark --implementation blocked --bm 64 --bn 128 --bk 32 512
 ./build/release/gemm_benchmark --implementation blocked --bm 32 --bn 128 --bk 32 --shape 255 513 257
+./build/release/gemm_benchmark --implementation microkernel --bm 32 --bn 128 --bk 32 --mr 4 --nr 4 512
 ```
 
 Defaults: all six orders; square sizes 64, 128, 256, 512, 1024; one warmup;
 five measured runs per implementation/size. Select one with `--implementation`
 (`naive_ijk`, `ikj`, `jik`, `jki`, `kij`, `kji`), or use `all`.
-Select `blocked` explicitly for cache blocking; `all` keeps its original six-order
+Select `blocked` or `microkernel` explicitly; `all` keeps its original six-order
 meaning. Block dimensions are positive independent runtime parameters, defaulting
-to 64 each for convenience. Block options require `--implementation blocked`.
+to 64 each for convenience. Block options require `blocked` or `microkernel`.
+Microtile options `--mr`/`--nr` require `microkernel`, default to 4×4, and support
+2×4, 4×4, 4×8, 8×4, 8×8, or 16×16 (a register-pressure experiment).
 `--shape M N K` supports one rectangular problem instead of positional sizes.
 Positive sizes and repetition counts are configurable. Very small sizes are useful
 for smoke checks, but timer overhead makes them unsuitable performance evidence.
@@ -66,7 +69,7 @@ The harness allocates and initializes outside timing, validates the warmup again
 the reference, and times the selected kernel using `std::chrono::steady_clock`.
 Required C zeroing is inside the four accumulating kernels and included in timing.
 Blocked GEMM includes its initialization too. The shared harness calls unblocked
-kernels through a function pointer and blocked GEMM through a tile-argument adapter.
+kernels through a function pointer and blocked/microkernel GEMM through argument adapters.
 Implementations run
 in the listed order for each size; repetitions are consecutive, not interleaved.
 It reports median milliseconds (averaging the middle pair for even counts) and
@@ -74,8 +77,9 @@ It reports median milliseconds (averaging the middle pair for even counts) and
 double checksum outside timing. Input seeds are fixed at 42 and 43; the generator
 maps mt19937 output directly to binary fractions in [-1,1).
 
-CSV columns are `implementation,M,N,K,time_ms,gflops,repetitions,warmups,threads,seed_A,seed_B,checksum,BM,BN,BK`.
-The final three columns are zero for unblocked kernels; older saved CSVs predate them.
+CSV columns are `implementation,M,N,K,time_ms,gflops,repetitions,warmups,threads,seed_A,seed_B,checksum,BM,BN,BK,MR,NR`.
+Macro dimensions are zero for unblocked kernels; micro dimensions are zero for
+non-microkernel implementations. Earlier saved CSVs predate these appended columns.
 Diagnostics go to stderr. A failed run returns nonzero and may leave a partial CSV;
 do not treat that file as a complete result. Checksums sum all measured outputs, so
 they scale with repetition count. They are an output-consumption guard, not a
@@ -92,9 +96,11 @@ commands for supported generators. Do not compare Debug timings to Release.
 
 See [the project charter](docs/project_charter.md),
 [experiment log](docs/optimization_log.md), and
-[loop-order analysis](docs/loop_orders.md) and [cache-blocking experiment](docs/cache_blocking.md)
+[loop-order analysis](docs/loop_orders.md), [cache-blocking experiment](docs/cache_blocking.md),
+and [microkernel experiment](docs/microkernels.md)
 for access patterns, design choices, cache capacities, and measured results.
-Register tiling, vectorization studies, explicit SIMD, and multicore execution come later.
+Controlled K-unrolling experiments, broader vectorization studies, explicit SIMD,
+and multicore execution come later.
 
 Regenerate the comparison plot with Python 3 and matplotlib (plotting is optional
 and is not a C++ build dependency):
@@ -127,3 +133,18 @@ The blocking experiment is retained even where it regresses; no universal winnin
 tile or automatic dispatch policy is inferred from these few shapes.
 
 ![Cache-blocking comparison](results/plots/blocks.png)
+
+Milestone 4 holds the macro tile at 32×128×32, measures six microtiles, and inspects
+actual optimized assembly for accumulator residency and hot-loop spills:
+
+```sh
+python3 scripts/benchmark_microkernels.py --output results/raw/microkernels-primary.csv
+python3 scripts/benchmark_microkernels.py --reverse --output results/raw/microkernels-reverse.csv
+python3 scripts/plot_microkernels.py results/raw/microkernels-primary.csv
+```
+
+The implementation is scalar C++ source; compiler-generated SIMD/FMA is permitted.
+See the [assembly findings and measured limitations](docs/microkernels.md) before
+assuming a larger tile or a local accumulator array means faster register code.
+
+![Microkernel comparison](results/plots/microkernels.png)

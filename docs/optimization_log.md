@@ -104,3 +104,25 @@ square shape, and do not add a global winning tile or automatic dispatch.
 Correctness passed Debug, Release, and sanitizer checks; all 88 benchmark
 configurations passed reference validation. See [full analysis](cache_blocking.md)
 for actual cache sizes, tables, reproducible commands, graph, and limitations.
+
+## Milestone 4 — scalar register microkernels
+
+**Hypothesis:** keep MR×NR partial C sums in registers across each K block to
+reduce output traffic and expose independent arithmetic chains. Spilling or
+repeated regressions against the same blocked driver challenge the benefit.
+
+**Change:** retain macro order ii/kk/jj, add six fixed-extent scalar C++ tile
+bodies (2×4 through 8×8 plus a 16×16 pressure case), and scalar edge cleanup.
+Benchmark with macro shape fixed at 32/128/32, against contemporaneous blocked
+and `ikj`; preserve earlier implementations. Inspect actual optimized assembly.
+
+**Evidence:** 2×4 and 4×4 hold accumulators in registers across K. 4×8, 8×4,
+and 8×8 spill inside K. 16×16 keeps its accumulator array in memory and the
+compiler generates vector operations. At 512, 4×4 measured 24.46/24.02 GFLOP/s
+versus blocked at 30.41/30.35 in primary/reverse sweeps. 16×16 beats blocked
+at 1024 but is only near `ikj`; it is not an all-register success.
+
+**Decision:** retain 4×4 as an inspectable register-resident candidate, not a
+new universal performance default. Call overhead, compiler choices, reuse and
+spills all contribute; these measurements do not isolate them. All tests and
+64 benchmark reference guards passed. See [full results and assembly guide](microkernels.md).
