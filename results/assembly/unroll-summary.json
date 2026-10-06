@@ -1,0 +1,54 @@
+[
+  {
+    "unroll": 1,
+    "file": "results/assembly/microkernel-apple-clang-arm64.s",
+    "function_start_line": 48,
+    "loop_start_line": 70,
+    "loop_end_line": 96,
+    "function_instructions": 60,
+    "instruction_bytes": 240,
+    "main_loop_instructions": 26,
+    "main_loop_fmadd": 16,
+    "main_loop_stack_mentions": 0,
+    "calls_in_function": 0
+  },
+  {
+    "unroll": 2,
+    "file": "results/assembly/unroll-apple-clang-arm64.s",
+    "function_start_line": 5,
+    "loop_start_line": 37,
+    "loop_end_line": 87,
+    "function_instructions": 134,
+    "instruction_bytes": 536,
+    "main_loop_instructions": 50,
+    "main_loop_fmadd": 32,
+    "main_loop_stack_mentions": 0,
+    "calls_in_function": 0
+  },
+  {
+    "unroll": 4,
+    "file": "results/assembly/unroll-apple-clang-arm64.s",
+    "function_start_line": 157,
+    "loop_start_line": 200,
+    "loop_end_line": 292,
+    "function_instructions": 184,
+    "instruction_bytes": 736,
+    "main_loop_instructions": 92,
+    "main_loop_fmadd": 64,
+    "main_loop_stack_mentions": 0,
+    "calls_in_function": 0
+  },
+  {
+    "unroll": 8,
+    "file": "results/assembly/unroll-apple-clang-arm64.s",
+    "function_start_line": 365,
+    "loop_start_line": 408,
+    "loop_end_line": 584,
+    "function_instructions": 268,
+    "instruction_bytes": 1072,
+    "main_loop_instructions": 176,
+    "main_loop_fmadd": 128,
+    "main_loop_stack_mentions": 0,
+    "calls_in_function": 0
+  }
+]

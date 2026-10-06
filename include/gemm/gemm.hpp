@@ -41,9 +41,11 @@ void blocked(const float* A, const float* B, float* C,
              std::size_t M, std::size_t N, std::size_t K, BlockSize tile);
 
 // Supported microtiles: 2x4, 4x4, 4x8, 8x4, 8x8, 16x16 (pressure experiment).
-// Invalid microtile or zero macro dimension throws before touching buffers.
+// Unroll 1 preserves the original bodies; factors 2/4/8 are supported for 4x4 only.
+// Invalid configuration throws before touching buffers.
 void microkernel(const float* A, const float* B, float* C,
                  std::size_t M, std::size_t N, std::size_t K,
-                 BlockSize tile, std::size_t MR, std::size_t NR);
+                 BlockSize tile, std::size_t MR, std::size_t NR,
+                 std::size_t unroll = 1);
 
 } // namespace gemm

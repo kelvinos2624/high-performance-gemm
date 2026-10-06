@@ -126,3 +126,29 @@ at 1024 but is only near `ikj`; it is not an all-register success.
 new universal performance default. Call overhead, compiler choices, reuse and
 spills all contribute; these measurements do not isolate them. All tests and
 64 benchmark reference guards passed. See [full results and assembly guide](microkernels.md).
+
+## Milestone 5 — K-loop unrolling (2026-10-06)
+
+**Hypothesis:** factors 2/4/8 reduce loop-control work and expose scheduling
+opportunities in the 4×4 microkernel, improving throughput without spills.
+
+**Change:** fixed consecutive K steps with the same sixteen accumulators and
+increasing-K order. Keep the factor-1 body unchanged, macro dimensions fixed at
+32/128/32, and scalar reduction cleanup for short/tail K blocks. No split chains,
+new microtile, manual SIMD, or compiler-flag changes.
+
+**Assembly:** requested expansion survives: 16/32/64/128 scalar FMAs per main
+iteration for factors 1/2/4/8. Step helpers inline; no hot-loop stack spills.
+Tile-body instruction bytes grow from 240 to 536/736/1072 (excluding metadata and
+padding). Higher factors add function-entry register saves; those are not
+reduction-loop spills.
+
+**Measurements:** two four-shape sweeps plus a targeted seven-repetition follow-up
+at 512. No stable general winner. At 512 and on the rectangular shape, expanded
+factors lose in both sweeps. At 1024, small gains are observed but are insufficient
+for a reliable tuning policy. An unusually low reverse-sweep factor-2 value did
+not reproduce in the follow-up; its cause is unknown and the original is retained.
+
+**Decision:** keep factor 1 as default and preserve the others as experiments.
+Debug, Release, sanitizer, CLI/CSV checks and all 54 benchmark reference guards
+passed. See [results and assembly guide](unrolling.md).

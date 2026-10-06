@@ -2,8 +2,9 @@
 
 A C++17 performance-engineering project that starts with a correct, deliberately
 naive matrix multiplication and advances through measured experiments. This is
-**Milestone 4**: contiguous row-major `float` matrices, a scalar reference with
+**Milestone 5**: contiguous row-major `float` matrices, a scalar reference with
 double accumulation, all six loop orders, configurable cache and register blocking,
+controlled K-loop unrolling,
 correctness tests, and a CSV benchmark.
 The original `naive_ijk` remains the unchanged Milestone 1 kernel.
 
@@ -50,6 +51,7 @@ here, not an arbitrary numerical error guarantee.
 ./build/release/gemm_benchmark --implementation blocked --bm 64 --bn 128 --bk 32 512
 ./build/release/gemm_benchmark --implementation blocked --bm 32 --bn 128 --bk 32 --shape 255 513 257
 ./build/release/gemm_benchmark --implementation microkernel --bm 32 --bn 128 --bk 32 --mr 4 --nr 4 512
+./build/release/gemm_benchmark --implementation microkernel --bm 32 --bn 128 --bk 32 --unroll 4 512
 ```
 
 Defaults: all six orders; square sizes 64, 128, 256, 512, 1024; one warmup;
@@ -60,6 +62,8 @@ meaning. Block dimensions are positive independent runtime parameters, defaultin
 to 64 each for convenience. Block options require `blocked` or `microkernel`.
 Microtile options `--mr`/`--nr` require `microkernel`, default to 4×4, and support
 2×4, 4×4, 4×8, 8×4, 8×8, or 16×16 (a register-pressure experiment).
+`--unroll 1|2|4|8` requires `microkernel`; factors greater than 1 require 4×4.
+Factor 1 remains the default and uses the unchanged Milestone 4 body.
 `--shape M N K` supports one rectangular problem instead of positional sizes.
 Positive sizes and repetition counts are configurable. Very small sizes are useful
 for smoke checks, but timer overhead makes them unsuitable performance evidence.
@@ -77,9 +81,9 @@ It reports median milliseconds (averaging the middle pair for even counts) and
 double checksum outside timing. Input seeds are fixed at 42 and 43; the generator
 maps mt19937 output directly to binary fractions in [-1,1).
 
-CSV columns are `implementation,M,N,K,time_ms,gflops,repetitions,warmups,threads,seed_A,seed_B,checksum,BM,BN,BK,MR,NR`.
+CSV columns are `implementation,M,N,K,time_ms,gflops,repetitions,warmups,threads,seed_A,seed_B,checksum,BM,BN,BK,MR,NR,unroll`.
 Macro dimensions are zero for unblocked kernels; micro dimensions are zero for
-non-microkernel implementations. Earlier saved CSVs predate these appended columns.
+non-microkernel implementations, as is `unroll`. Earlier saved CSVs predate these appended columns.
 Diagnostics go to stderr. A failed run returns nonzero and may leave a partial CSV;
 do not treat that file as a complete result. Checksums sum all measured outputs, so
 they scale with repetition count. They are an output-consumption guard, not a
@@ -97,9 +101,9 @@ commands for supported generators. Do not compare Debug timings to Release.
 See [the project charter](docs/project_charter.md),
 [experiment log](docs/optimization_log.md), and
 [loop-order analysis](docs/loop_orders.md), [cache-blocking experiment](docs/cache_blocking.md),
-and [microkernel experiment](docs/microkernels.md)
+the [microkernel experiment](docs/microkernels.md), and [unrolling experiment](docs/unrolling.md)
 for access patterns, design choices, cache capacities, and measured results.
-Controlled K-unrolling experiments, broader vectorization studies, explicit SIMD,
+Broader vectorization studies, explicit SIMD,
 and multicore execution come later.
 
 Regenerate the comparison plot with Python 3 and matplotlib (plotting is optional
@@ -148,3 +152,18 @@ See the [assembly findings and measured limitations](docs/microkernels.md) befor
 assuming a larger tile or a local accumulator array means faster register code.
 
 ![Microkernel comparison](results/plots/microkernels.png)
+
+Milestone 5 compares K-unroll factors 1/2/4/8 with microtile 4×4 and macro tile
+32×128×32 held fixed. The old factor-1 body remains available and unchanged:
+
+```sh
+python3 scripts/benchmark_unroll.py --output results/raw/unroll-primary.csv
+python3 scripts/benchmark_unroll.py --reverse --output results/raw/unroll-reverse.csv
+python3 scripts/plot_unroll.py results/raw/unroll-primary.csv
+```
+
+See [the report](docs/unrolling.md) for machine-code expansion, code growth,
+tail correctness, and measured tradeoffs. Manual unrolling is retained as an
+experiment, not assumed to be faster.
+
+![K-loop unroll comparison](results/plots/unroll.png)

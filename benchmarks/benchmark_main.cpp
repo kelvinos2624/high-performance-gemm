@@ -29,7 +29,7 @@ double checksum(const gemm::Matrix& C) {
 template <typename Function>
 void benchmark(const char* name, Function function, std::size_t M, std::size_t N,
                std::size_t K, std::size_t repetitions, gemm::BlockSize tile,
-               std::size_t MR = 0, std::size_t NR = 0) {
+               std::size_t MR = 0, std::size_t NR = 0, std::size_t unroll = 0) {
     // BENCHMARK-IMPORTANT: Allocate, initialize with fixed seeds, and compute
     // the reference outside timing so only the kernel contributes to latency.
     gemm::Matrix A(M, K), B(K, N), C(M, N), expected(M, N);
@@ -77,7 +77,7 @@ void benchmark(const char* name, Function function, std::size_t M, std::size_t N
     std::cout << name << ',' << M << ',' << N << ',' << K << ','
               << seconds * 1000.0 << ',' << operations / seconds / 1e9 << ','
               << repetitions << ",1,1,42,43," << consumed << ','
-              << tile.m << ',' << tile.n << ',' << tile.k << ',' << MR << ',' << NR << '\n';
+              << tile.m << ',' << tile.n << ',' << tile.k << ',' << MR << ',' << NR << ',' << unroll << '\n';
 }
 } // namespace
 
@@ -89,7 +89,8 @@ int main(int argc, char** argv) {
         gemm::BlockSize tile{64, 64, 64};
         gemm::BlockSize shape{0, 0, 0};
         bool tile_given = false, micro_given = false;
-        std::size_t MR = 4, NR = 4;
+        std::size_t MR = 4, NR = 4, unroll = 1;
+        bool unroll_given = false;
         for (int i = 1; i < argc; ++i) {
             const std::string arg = argv[i];
             if (arg == "--help") {
@@ -98,6 +99,7 @@ int main(int argc, char** argv) {
                              "Names: all (six loop orders), naive_ijk ikj jik jki kij kji blocked microkernel\n"
                              "Blocked options: --bm M --bn N --bk K (defaults 64 each)\n"
                              "Microkernel options: --mr M --nr N (default 4x4; 2x4,4x4,4x8,8x4,8x8,16x16)\n"
+                             "Unrolling: --unroll 1|2|4|8 (microkernel only; >1 requires 4x4)\n"
                              "Rectangular input: --shape M N K (instead of SIZE arguments)\n";
                 return 0;
             }
@@ -120,6 +122,10 @@ int main(int argc, char** argv) {
                 if (arg == "--mr") MR = value;
                 else NR = value;
                 micro_given = true;
+            } else if (arg == "--unroll") {
+                if (++i == argc) throw std::invalid_argument("Missing unroll factor");
+                unroll = positive_integer(argv[i]);
+                unroll_given = true;
             } else if (arg == "--shape") {
                 if (shape.m != 0 || argc - i <= 3)
                     throw std::invalid_argument("Specify one --shape M N K");
@@ -135,6 +141,12 @@ int main(int argc, char** argv) {
             if (implementation == "all" || implementation == kernel.name)
                 selected.push_back(kernel);
         }
+        if (unroll_given && implementation != "microkernel")
+            throw std::invalid_argument("Unroll requires microkernel");
+        if (implementation == "microkernel" &&
+            ((unroll != 1 && unroll != 2 && unroll != 4 && unroll != 8) ||
+             (unroll != 1 && (MR != 4 || NR != 4))))
+            throw std::invalid_argument("Unroll 2/4/8 requires a 4x4 microtile");
         if (micro_given && implementation != "microkernel")
             throw std::invalid_argument("Microtile options require --implementation microkernel");
         if (tile_given && implementation != "blocked" && implementation != "microkernel")
@@ -144,14 +156,14 @@ int main(int argc, char** argv) {
         if (selected.empty() && implementation != "blocked" && implementation != "microkernel") throw std::invalid_argument("Unknown implementation: " + implementation);
         if (sizes.empty()) sizes = {64, 128, 256, 512, 1024};
         std::cout << std::setprecision(12)
-                  << "implementation,M,N,K,time_ms,gflops,repetitions,warmups,threads,seed_A,seed_B,checksum,BM,BN,BK,MR,NR\n";
+                  << "implementation,M,N,K,time_ms,gflops,repetitions,warmups,threads,seed_A,seed_B,checksum,BM,BN,BK,MR,NR,unroll\n";
         const auto run = [&](std::size_t M, std::size_t N, std::size_t K) {
             if (implementation == "microkernel") {
-                const auto function = [tile, MR, NR](const float* A, const float* B, float* C,
+                const auto function = [tile, MR, NR, unroll](const float* A, const float* B, float* C,
                                                     std::size_t m, std::size_t n, std::size_t k) {
-                    gemm::microkernel(A, B, C, m, n, k, tile, MR, NR);
+                    gemm::microkernel(A, B, C, m, n, k, tile, MR, NR, unroll);
                 };
-                benchmark("microkernel", function, M, N, K, repetitions, tile, MR, NR);
+                benchmark("microkernel", function, M, N, K, repetitions, tile, MR, NR, unroll);
             } else if (implementation == "blocked") {
                 const auto function = [tile](const float* A, const float* B, float* C,
                                              std::size_t m, std::size_t n, std::size_t k) {

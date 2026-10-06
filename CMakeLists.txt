@@ -4,7 +4,7 @@ project(gemm VERSION 0.1.0 LANGUAGES CXX)
 option(GEMM_NATIVE_ARCH "Tune generated code for the build machine" OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-add_library(gemm STATIC src/matrix.cpp src/gemm_reference.cpp src/gemm_naive.cpp src/gemm_loop_order.cpp src/gemm_blocked.cpp src/gemm_microkernel.cpp src/microkernel_tiles.cpp)
+add_library(gemm STATIC src/matrix.cpp src/gemm_reference.cpp src/gemm_naive.cpp src/gemm_loop_order.cpp src/gemm_blocked.cpp src/gemm_microkernel.cpp src/microkernel_tiles.cpp src/microkernel_unrolled.cpp)
 target_include_directories(gemm PUBLIC include)
 target_compile_features(gemm PUBLIC cxx_std_17)
 set_target_properties(gemm PROPERTIES CXX_EXTENSIONS OFF)

@@ -9,10 +9,10 @@
 #include <vector>
 
 namespace {
-std::size_t active_mr = 4, active_nr = 4;
+std::size_t active_mr = 4, active_nr = 4, active_unroll = 1;
 void run(const float* A, const float* B, float* C, std::size_t M, std::size_t N,
          std::size_t K, gemm::BlockSize tile) {
-    gemm::microkernel(A, B, C, M, N, K, tile, active_mr, active_nr);
+    gemm::microkernel(A, B, C, M, N, K, tile, active_mr, active_nr, active_unroll);
 }
 
 void require(bool ok, const char* message) {
@@ -89,6 +89,29 @@ int main() {
             active_mr = shape.m; active_nr = shape.n;
             suite();
         }
+        active_mr = active_nr = 4;
+        // PERF-SEMANTICS: Check every remainder modulo 2/4/8, macro K blocks
+        // shorter than U, and simultaneous M/N tails; old C must be overwritten.
+        for (auto u : {1u, 2u, 4u, 8u}) {
+            active_unroll = u;
+            suite();
+            for (std::size_t K = 0; K <= 17; ++K)
+                for (auto BK : {1u, 3u, 5u, 7u, 8u, 9u, 31u, 32u, 33u}) {
+                    check(4, 4, K, {8, 8, BK});
+                    check(9, 7, K, {7, 5, BK});
+                }
+        }
+        for (auto u : {0u, 3u, 16u}) {
+            float C = 9;
+            bool rejected = false;
+            try { gemm::microkernel(nullptr, nullptr, &C, 1, 1, 0, {32,128,32}, 4, 4, u); }
+            catch (const std::invalid_argument&) { rejected = true; }
+            require(rejected && C == 9, "Invalid unroll must not modify C");
+        }
+        bool rejected = false;
+        try { gemm::microkernel(nullptr, nullptr, nullptr, 0, 0, 0, {32,128,32}, 8, 8, 2); }
+        catch (const std::invalid_argument&) { rejected = true; }
+        require(rejected, "Unrolling requires 4x4");
         for (auto shape : {gemm::BlockSize{0,4,0}, {4,0,0}, {3,4,0}, {4,16,0}}) {
             float C = 9;
             bool rejected = false;
