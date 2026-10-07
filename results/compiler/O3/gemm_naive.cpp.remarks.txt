@@ -1,0 +1,21 @@
+/Users/kelvinfeng/my_code/gemm/src/gemm_naive.cpp:13:13: remark: vectorized loop (vectorization width: 4, interleaved count: 4) [-Rpass=loop-vectorize]
+            for (std::size_t k = 0; k < K; ++k) {
+            ^
+/Users/kelvinfeng/my_code/gemm/src/gemm_naive.cpp:14:24: remark: Cannot SLP vectorize list: type <4 x float> is unsupported by vectorizer [-Rpass-missed=slp-vectorizer]
+                sum += A[i * K + k] * B[k * N + j];
+                       ^
+/Users/kelvinfeng/my_code/gemm/src/gemm_naive.cpp:14:24: remark: Cannot SLP vectorize list: type <4 x float> is unsupported by vectorizer [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/gemm_naive.cpp:14:24: remark: Cannot SLP vectorize list: type <4 x float> is unsupported by vectorizer [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/gemm_naive.cpp:14:24: remark: Cannot SLP vectorize list: type <4 x float> is unsupported by vectorizer [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/gemm_naive.cpp:4:6: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+void naive_ijk(const float* A, const float* B, float* C,
+     ^
+/Users/kelvinfeng/my_code/gemm/src/gemm_naive.cpp:8:31: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+    for (std::size_t i = 0; i < M; ++i) {
+                              ^
+/Users/kelvinfeng/my_code/gemm/src/gemm_naive.cpp:4:6: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+void naive_ijk(const float* A, const float* B, float* C,
+     ^
+/Users/kelvinfeng/my_code/gemm/src/gemm_naive.cpp:9:9: remark: completely unrolled loop with 1 iterations [-Rpass=loop-unroll]
+        for (std::size_t j = 0; j < N; ++j) {
+        ^

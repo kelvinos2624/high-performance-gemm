@@ -1,0 +1,79 @@
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:23:13: remark: vectorized loop (vectorization width: 4, interleaved count: 4) [-Rpass=loop-vectorize]
+            for (std::size_t j = 0; j < N; ++j) {
+            ^
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:23:13: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:23:13: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:22:37: remark: Cannot SLP vectorize list: vectorization was impossible with available vectorization factors [-Rpass-missed=slp-vectorizer]
+            const float a = A[i * K + k];
+                                    ^
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:21:9: remark: Cannot SLP vectorize list: vectorization was impossible with available vectorization factors [-Rpass-missed=slp-vectorizer]
+        for (std::size_t k = 0; k < K; ++k) {
+        ^
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:16:11: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+    if (M == 0 || N == 0) return;
+          ^
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:13:6: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+void ikj(const float* A, const float* B, float* C,
+     ^
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:40:13: remark: vectorized loop (vectorization width: 4, interleaved count: 4) [-Rpass=loop-vectorize]
+            for (std::size_t k = 0; k < K; ++k) {
+            ^
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:41:24: remark: Cannot SLP vectorize list: type <4 x float> is unsupported by vectorizer [-Rpass-missed=slp-vectorizer]
+                sum += A[i * K + k] * B[k * N + j];
+                       ^
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:41:24: remark: Cannot SLP vectorize list: type <4 x float> is unsupported by vectorizer [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:41:24: remark: Cannot SLP vectorize list: type <4 x float> is unsupported by vectorizer [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:41:24: remark: Cannot SLP vectorize list: type <4 x float> is unsupported by vectorizer [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:40:13: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+            for (std::size_t k = 0; k < K; ++k) {
+            ^
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:40:13: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:33:11: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+    if (M == 0 || N == 0) return;
+          ^
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:30:6: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+void jik(const float* A, const float* B, float* C,
+     ^
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:58:13: remark: vectorized loop (vectorization width: 4, interleaved count: 4) [-Rpass=loop-vectorize]
+            for (std::size_t i = 0; i < M; ++i) {
+            ^
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:58:13: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:58:13: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:58:13: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:58:13: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:51:11: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+    if (M == 0 || N == 0) return;
+          ^
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:48:6: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+void jki(const float* A, const float* B, float* C,
+     ^
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:75:13: remark: vectorized loop (vectorization width: 4, interleaved count: 4) [-Rpass=loop-vectorize]
+            for (std::size_t j = 0; j < N; ++j) {
+            ^
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:75:13: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:75:13: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:74:33: remark: Cannot SLP vectorize list: vectorization was impossible with available vectorization factors [-Rpass-missed=slp-vectorizer]
+            const float a = A[i * K + k];
+                                ^
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:65:6: remark: Cannot SLP vectorize list: vectorization was impossible with available vectorization factors [-Rpass-missed=slp-vectorizer]
+void kij(const float* A, const float* B, float* C,
+     ^
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:68:11: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+    if (M == 0 || N == 0) return;
+          ^
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:65:6: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+void kij(const float* A, const float* B, float* C,
+     ^
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:92:13: remark: vectorized loop (vectorization width: 4, interleaved count: 4) [-Rpass=loop-vectorize]
+            for (std::size_t i = 0; i < M; ++i) {
+            ^
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:92:13: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:92:13: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:92:13: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:92:13: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:85:11: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+    if (M == 0 || N == 0) return;
+          ^
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:82:6: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+void kji(const float* A, const float* B, float* C,
+     ^

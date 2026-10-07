@@ -1,0 +1,189 @@
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:13:5: remark: completely unrolled loop with 2 iterations [-Rpass=loop-unroll]
+    for (std::size_t r = 0; r < MR; ++r)
+    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:25:13: remark: completely unrolled loop with 4 iterations [-Rpass=loop-unroll]
+            for (std::size_t c = 0; c < NR; ++c) acc[r][c] += a * b[c];
+            ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:23:9: remark: completely unrolled loop with 2 iterations [-Rpass=loop-unroll]
+        for (std::size_t r = 0; r < MR; ++r) {
+        ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:29:5: remark: completely unrolled loop with 2 iterations [-Rpass=loop-unroll]
+    for (std::size_t r = 0; r < MR; ++r)
+    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:13:5: remark: completely unrolled loop with 4 iterations [-Rpass=loop-unroll]
+    for (std::size_t r = 0; r < MR; ++r)
+    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:25:13: remark: completely unrolled loop with 4 iterations [-Rpass=loop-unroll]
+            for (std::size_t c = 0; c < NR; ++c) acc[r][c] += a * b[c];
+            ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:23:9: remark: completely unrolled loop with 4 iterations [-Rpass=loop-unroll]
+        for (std::size_t r = 0; r < MR; ++r) {
+        ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:29:5: remark: completely unrolled loop with 4 iterations [-Rpass=loop-unroll]
+    for (std::size_t r = 0; r < MR; ++r)
+    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:13:5: remark: completely unrolled loop with 4 iterations [-Rpass=loop-unroll]
+    for (std::size_t r = 0; r < MR; ++r)
+    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:25:13: remark: completely unrolled loop with 8 iterations [-Rpass=loop-unroll]
+            for (std::size_t c = 0; c < NR; ++c) acc[r][c] += a * b[c];
+            ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:29:5: remark: completely unrolled loop with 4 iterations [-Rpass=loop-unroll]
+    for (std::size_t r = 0; r < MR; ++r)
+    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:23:9: remark: completely unrolled loop with 4 iterations [-Rpass=loop-unroll]
+        for (std::size_t r = 0; r < MR; ++r) {
+        ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:13:5: remark: completely unrolled loop with 8 iterations [-Rpass=loop-unroll]
+    for (std::size_t r = 0; r < MR; ++r)
+    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:25:13: remark: completely unrolled loop with 4 iterations [-Rpass=loop-unroll]
+            for (std::size_t c = 0; c < NR; ++c) acc[r][c] += a * b[c];
+            ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:29:5: remark: completely unrolled loop with 8 iterations [-Rpass=loop-unroll]
+    for (std::size_t r = 0; r < MR; ++r)
+    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:23:9: remark: completely unrolled loop with 8 iterations [-Rpass=loop-unroll]
+        for (std::size_t r = 0; r < MR; ++r) {
+        ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:13:5: remark: completely unrolled loop with 8 iterations [-Rpass=loop-unroll]
+    for (std::size_t r = 0; r < MR; ++r)
+    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:25:13: remark: completely unrolled loop with 8 iterations [-Rpass=loop-unroll]
+            for (std::size_t c = 0; c < NR; ++c) acc[r][c] += a * b[c];
+            ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:29:5: remark: completely unrolled loop with 8 iterations [-Rpass=loop-unroll]
+    for (std::size_t r = 0; r < MR; ++r)
+    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:13:5: remark: completely unrolled loop with 16 iterations [-Rpass=loop-unroll]
+    for (std::size_t r = 0; r < MR; ++r)
+    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:25:13: remark: completely unrolled loop with 16 iterations [-Rpass=loop-unroll]
+            for (std::size_t c = 0; c < NR; ++c) acc[r][c] += a * b[c];
+            ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:29:5: remark: completely unrolled loop with 16 iterations [-Rpass=loop-unroll]
+    for (std::size_t r = 0; r < MR; ++r)
+    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:20:5: remark: the cost-model indicates that vectorization is not beneficial [-Rpass-missed=loop-vectorize]
+    for (std::size_t k = 0; k < depth; ++k) {
+    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:20:5: remark: the cost-model indicates that interleaving is not beneficial [-Rpass-missed=loop-vectorize]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:36:6: note: could not determine the original source location for src/microkernel_tiles.cpp:0:0
+void tile_2x4(const float* A, const float* B, float* C,
+     ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:36:6: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+void tile_2x4(const float* A, const float* B, float* C,
+     ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:36:6: note: could not determine the original source location for src/microkernel_tiles.cpp:0:0
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:36:6: note: could not determine the original source location for src/microkernel_tiles.cpp:0:0
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:36:6: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+void tile_2x4(const float* A, const float* B, float* C,
+     ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:36:6: note: could not determine the original source location for src/microkernel_tiles.cpp:0:0
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:20:5: remark: the cost-model indicates that vectorization is not beneficial [-Rpass-missed=loop-vectorize]
+    for (std::size_t k = 0; k < depth; ++k) {
+    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:20:5: remark: the cost-model indicates that interleaving is not beneficial [-Rpass-missed=loop-vectorize]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:40:6: note: could not determine the original source location for src/microkernel_tiles.cpp:0:0
+void tile_4x4(const float* A, const float* B, float* C,
+     ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:40:6: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+void tile_4x4(const float* A, const float* B, float* C,
+     ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:40:6: note: could not determine the original source location for src/microkernel_tiles.cpp:0:0
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:40:6: note: could not determine the original source location for src/microkernel_tiles.cpp:0:0
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:40:6: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+void tile_4x4(const float* A, const float* B, float* C,
+     ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:40:6: note: could not determine the original source location for src/microkernel_tiles.cpp:0:0
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:24:37: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+            const float a = A[r * K + k];
+                                    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:20:5: remark: the cost-model indicates that vectorization is not beneficial [-Rpass-missed=loop-vectorize]
+    for (std::size_t k = 0; k < depth; ++k) {
+    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:20:5: remark: the cost-model indicates that interleaving is not beneficial [-Rpass-missed=loop-vectorize]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:44:6: note: could not determine the original source location for src/microkernel_tiles.cpp:0:0
+void tile_4x8(const float* A, const float* B, float* C,
+     ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:44:6: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+void tile_4x8(const float* A, const float* B, float* C,
+     ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:44:6: note: could not determine the original source location for src/microkernel_tiles.cpp:0:0
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:44:6: note: could not determine the original source location for src/microkernel_tiles.cpp:0:0
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:44:6: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+void tile_4x8(const float* A, const float* B, float* C,
+     ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:44:6: note: could not determine the original source location for src/microkernel_tiles.cpp:0:0
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:24:37: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+            const float a = A[r * K + k];
+                                    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:20:5: remark: the cost-model indicates that vectorization is not beneficial [-Rpass-missed=loop-vectorize]
+    for (std::size_t k = 0; k < depth; ++k) {
+    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:20:5: remark: the cost-model indicates that interleaving is not beneficial [-Rpass-missed=loop-vectorize]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:48:6: note: could not determine the original source location for src/microkernel_tiles.cpp:0:0
+void tile_8x4(const float* A, const float* B, float* C,
+     ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:48:6: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+void tile_8x4(const float* A, const float* B, float* C,
+     ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:48:6: note: could not determine the original source location for src/microkernel_tiles.cpp:0:0
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:48:6: note: could not determine the original source location for src/microkernel_tiles.cpp:0:0
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:48:6: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+void tile_8x4(const float* A, const float* B, float* C,
+     ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:48:6: note: could not determine the original source location for src/microkernel_tiles.cpp:0:0
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:24:37: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+            const float a = A[r * K + k];
+                                    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:24:37: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:24:37: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:48:6: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+void tile_8x4(const float* A, const float* B, float* C,
+     ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:48:6: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:23:9: remark: loop not vectorized: runtime SCEV checks needed. Enable vectorization of this loop with '#pragma clang loop vectorize(enable)' when compiling with -Os/-Oz [-Rpass-analysis=loop-vectorize]
+        for (std::size_t r = 0; r < MR; ++r) {
+        ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:23:9: remark: the cost-model indicates that vectorization is not beneficial [-Rpass-missed=loop-vectorize]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:23:9: remark: the cost-model indicates that interleaving is not beneficial [-Rpass-missed=loop-vectorize]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:25:60: remark: Stores SLP vectorized with cost -9 and with tree size 5 [-Rpass=slp-vectorizer]
+            for (std::size_t c = 0; c < NR; ++c) acc[r][c] += a * b[c];
+                                                           ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:25:60: remark: Stores SLP vectorized with cost -3 and with tree size 5 [-Rpass=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:25:60: remark: Stores SLP vectorized with cost -3 and with tree size 5 [-Rpass=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:25:60: remark: Cannot SLP vectorize list: vectorization was impossible with available vectorization factors [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:25:60: remark: Cannot SLP vectorize list: vectorization was impossible with available vectorization factors [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:52:6: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+void tile_8x8(const float* A, const float* B, float* C,
+     ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:52:6: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:23:9: remark: completely unrolled loop with 8 iterations [-Rpass=loop-unroll]
+        for (std::size_t r = 0; r < MR; ++r) {
+        ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:23:9: remark: the cost-model indicates that vectorization is not beneficial [-Rpass-missed=loop-vectorize]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:23:9: remark: the cost-model indicates that interleaving is not beneficial [-Rpass-missed=loop-vectorize]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:25:60: remark: Stores SLP vectorized with cost -9 and with tree size 5 [-Rpass=slp-vectorizer]
+            for (std::size_t c = 0; c < NR; ++c) acc[r][c] += a * b[c];
+                                                           ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:25:60: remark: Stores SLP vectorized with cost -3 and with tree size 5 [-Rpass=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:25:60: remark: Stores SLP vectorized with cost -3 and with tree size 5 [-Rpass=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:25:60: remark: Stores SLP vectorized with cost -3 and with tree size 5 [-Rpass=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:25:60: remark: Stores SLP vectorized with cost -3 and with tree size 5 [-Rpass=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:25:60: remark: Stores SLP vectorized with cost -3 and with tree size 5 [-Rpass=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:25:60: remark: Stores SLP vectorized with cost -3 and with tree size 5 [-Rpass=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:25:60: remark: Cannot SLP vectorize list: vectorization was impossible with available vectorization factors [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:25:60: remark: Cannot SLP vectorize list: vectorization was impossible with available vectorization factors [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:25:60: remark: Cannot SLP vectorize list: vectorization was impossible with available vectorization factors [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:25:60: remark: Cannot SLP vectorize list: vectorization was impossible with available vectorization factors [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:25:60: remark: Cannot SLP vectorize list: vectorization was impossible with available vectorization factors [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:25:60: remark: Cannot SLP vectorize list: vectorization was impossible with available vectorization factors [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:56:6: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+void tile_16x16(const float* A, const float* B, float* C,
+     ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:56:6: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:56:6: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:56:6: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:56:6: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:56:6: remark: List vectorization was possible but not beneficial with cost 0 >= 0 [-Rpass-missed=slp-vectorizer]

@@ -1,0 +1,79 @@
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:13:5: remark: completely unrolled loop with 2 iterations [-Rpass=loop-unroll]
+    for (std::size_t r = 0; r < MR; ++r)
+    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:25:13: remark: completely unrolled loop with 4 iterations [-Rpass=loop-unroll]
+            for (std::size_t c = 0; c < NR; ++c) acc[r][c] += a * b[c];
+            ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:23:9: remark: completely unrolled loop with 2 iterations [-Rpass=loop-unroll]
+        for (std::size_t r = 0; r < MR; ++r) {
+        ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:29:5: remark: completely unrolled loop with 2 iterations [-Rpass=loop-unroll]
+    for (std::size_t r = 0; r < MR; ++r)
+    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:13:5: remark: completely unrolled loop with 4 iterations [-Rpass=loop-unroll]
+    for (std::size_t r = 0; r < MR; ++r)
+    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:25:13: remark: completely unrolled loop with 4 iterations [-Rpass=loop-unroll]
+            for (std::size_t c = 0; c < NR; ++c) acc[r][c] += a * b[c];
+            ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:23:9: remark: completely unrolled loop with 4 iterations [-Rpass=loop-unroll]
+        for (std::size_t r = 0; r < MR; ++r) {
+        ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:29:5: remark: completely unrolled loop with 4 iterations [-Rpass=loop-unroll]
+    for (std::size_t r = 0; r < MR; ++r)
+    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:13:5: remark: completely unrolled loop with 4 iterations [-Rpass=loop-unroll]
+    for (std::size_t r = 0; r < MR; ++r)
+    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:25:13: remark: completely unrolled loop with 8 iterations [-Rpass=loop-unroll]
+            for (std::size_t c = 0; c < NR; ++c) acc[r][c] += a * b[c];
+            ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:23:9: remark: completely unrolled loop with 4 iterations [-Rpass=loop-unroll]
+        for (std::size_t r = 0; r < MR; ++r) {
+        ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:29:5: remark: completely unrolled loop with 4 iterations [-Rpass=loop-unroll]
+    for (std::size_t r = 0; r < MR; ++r)
+    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:13:5: remark: completely unrolled loop with 8 iterations [-Rpass=loop-unroll]
+    for (std::size_t r = 0; r < MR; ++r)
+    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:25:13: remark: completely unrolled loop with 4 iterations [-Rpass=loop-unroll]
+            for (std::size_t c = 0; c < NR; ++c) acc[r][c] += a * b[c];
+            ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:23:9: remark: completely unrolled loop with 8 iterations [-Rpass=loop-unroll]
+        for (std::size_t r = 0; r < MR; ++r) {
+        ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:29:5: remark: completely unrolled loop with 8 iterations [-Rpass=loop-unroll]
+    for (std::size_t r = 0; r < MR; ++r)
+    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:13:5: remark: completely unrolled loop with 8 iterations [-Rpass=loop-unroll]
+    for (std::size_t r = 0; r < MR; ++r)
+    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:25:13: remark: completely unrolled loop with 8 iterations [-Rpass=loop-unroll]
+            for (std::size_t c = 0; c < NR; ++c) acc[r][c] += a * b[c];
+            ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:29:5: remark: completely unrolled loop with 8 iterations [-Rpass=loop-unroll]
+    for (std::size_t r = 0; r < MR; ++r)
+    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:23:9: remark: completely unrolled loop with 8 iterations [-Rpass=loop-unroll]
+        for (std::size_t r = 0; r < MR; ++r) {
+        ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:13:5: remark: completely unrolled loop with 16 iterations [-Rpass=loop-unroll]
+    for (std::size_t r = 0; r < MR; ++r)
+    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:25:13: remark: completely unrolled loop with 16 iterations [-Rpass=loop-unroll]
+            for (std::size_t c = 0; c < NR; ++c) acc[r][c] += a * b[c];
+            ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:29:5: remark: completely unrolled loop with 16 iterations [-Rpass=loop-unroll]
+    for (std::size_t r = 0; r < MR; ++r)
+    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:20:5: remark: loop not vectorized [-Rpass-missed=loop-vectorize]
+    for (std::size_t k = 0; k < depth; ++k) {
+    ^
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:20:5: remark: loop not vectorized [-Rpass-missed=loop-vectorize]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:20:5: remark: loop not vectorized [-Rpass-missed=loop-vectorize]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:20:5: remark: loop not vectorized [-Rpass-missed=loop-vectorize]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:20:5: remark: loop not vectorized [-Rpass-missed=loop-vectorize]
+/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp:23:9: remark: loop not vectorized [-Rpass-missed=loop-vectorize]
+        for (std::size_t r = 0; r < MR; ++r) {
+        ^

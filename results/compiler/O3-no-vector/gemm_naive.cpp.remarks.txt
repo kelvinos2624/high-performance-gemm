@@ -1,0 +1,3 @@
+/Users/kelvinfeng/my_code/gemm/src/gemm_naive.cpp:13:13: remark: loop not vectorized [-Rpass-missed=loop-vectorize]
+            for (std::size_t k = 0; k < K; ++k) {
+            ^

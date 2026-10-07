@@ -1,0 +1,11 @@
+Test project /Users/kelvinfeng/my_code/gemm/build/compiler/O0
+    Start 1: gemm_correctness
+1/3 Test #1: gemm_correctness .................   Passed    0.34 sec
+    Start 2: gemm_blocked_correctness
+2/3 Test #2: gemm_blocked_correctness .........   Passed    0.16 sec
+    Start 3: gemm_microkernel_correctness
+3/3 Test #3: gemm_microkernel_correctness .....   Passed    0.45 sec
+
+100% tests passed out of 3
+
+Total Test time (real) =   0.96 sec

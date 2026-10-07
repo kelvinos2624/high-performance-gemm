@@ -1,0 +1,74 @@
+[
+  {
+    "directory": "/Users/kelvinfeng/my_code/gemm/build/compiler/O3",
+    "command": "/usr/bin/clang++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=c++17 \"-Rpass=(loop-vectorize|slp-vectorizer|loop-unroll)\" \"-Rpass-missed=(loop-vectorize|slp-vectorizer|loop-unroll)\" \"-Rpass-analysis=(loop-vectorize|slp-vectorizer|loop-unroll)\" -o CMakeFiles/gemm.dir/src/matrix.cpp.o -c /Users/kelvinfeng/my_code/gemm/src/matrix.cpp",
+    "file": "/Users/kelvinfeng/my_code/gemm/src/matrix.cpp",
+    "output": "CMakeFiles/gemm.dir/src/matrix.cpp.o"
+  },
+  {
+    "directory": "/Users/kelvinfeng/my_code/gemm/build/compiler/O3",
+    "command": "/usr/bin/clang++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=c++17 \"-Rpass=(loop-vectorize|slp-vectorizer|loop-unroll)\" \"-Rpass-missed=(loop-vectorize|slp-vectorizer|loop-unroll)\" \"-Rpass-analysis=(loop-vectorize|slp-vectorizer|loop-unroll)\" -o CMakeFiles/gemm.dir/src/gemm_reference.cpp.o -c /Users/kelvinfeng/my_code/gemm/src/gemm_reference.cpp",
+    "file": "/Users/kelvinfeng/my_code/gemm/src/gemm_reference.cpp",
+    "output": "CMakeFiles/gemm.dir/src/gemm_reference.cpp.o"
+  },
+  {
+    "directory": "/Users/kelvinfeng/my_code/gemm/build/compiler/O3",
+    "command": "/usr/bin/clang++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=c++17 \"-Rpass=(loop-vectorize|slp-vectorizer|loop-unroll)\" \"-Rpass-missed=(loop-vectorize|slp-vectorizer|loop-unroll)\" \"-Rpass-analysis=(loop-vectorize|slp-vectorizer|loop-unroll)\" -o CMakeFiles/gemm.dir/src/gemm_naive.cpp.o -c /Users/kelvinfeng/my_code/gemm/src/gemm_naive.cpp",
+    "file": "/Users/kelvinfeng/my_code/gemm/src/gemm_naive.cpp",
+    "output": "CMakeFiles/gemm.dir/src/gemm_naive.cpp.o"
+  },
+  {
+    "directory": "/Users/kelvinfeng/my_code/gemm/build/compiler/O3",
+    "command": "/usr/bin/clang++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=c++17 \"-Rpass=(loop-vectorize|slp-vectorizer|loop-unroll)\" \"-Rpass-missed=(loop-vectorize|slp-vectorizer|loop-unroll)\" \"-Rpass-analysis=(loop-vectorize|slp-vectorizer|loop-unroll)\" -o CMakeFiles/gemm.dir/src/gemm_loop_order.cpp.o -c /Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp",
+    "file": "/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp",
+    "output": "CMakeFiles/gemm.dir/src/gemm_loop_order.cpp.o"
+  },
+  {
+    "directory": "/Users/kelvinfeng/my_code/gemm/build/compiler/O3",
+    "command": "/usr/bin/clang++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=c++17 \"-Rpass=(loop-vectorize|slp-vectorizer|loop-unroll)\" \"-Rpass-missed=(loop-vectorize|slp-vectorizer|loop-unroll)\" \"-Rpass-analysis=(loop-vectorize|slp-vectorizer|loop-unroll)\" -o CMakeFiles/gemm.dir/src/gemm_blocked.cpp.o -c /Users/kelvinfeng/my_code/gemm/src/gemm_blocked.cpp",
+    "file": "/Users/kelvinfeng/my_code/gemm/src/gemm_blocked.cpp",
+    "output": "CMakeFiles/gemm.dir/src/gemm_blocked.cpp.o"
+  },
+  {
+    "directory": "/Users/kelvinfeng/my_code/gemm/build/compiler/O3",
+    "command": "/usr/bin/clang++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=c++17 \"-Rpass=(loop-vectorize|slp-vectorizer|loop-unroll)\" \"-Rpass-missed=(loop-vectorize|slp-vectorizer|loop-unroll)\" \"-Rpass-analysis=(loop-vectorize|slp-vectorizer|loop-unroll)\" -o CMakeFiles/gemm.dir/src/gemm_microkernel.cpp.o -c /Users/kelvinfeng/my_code/gemm/src/gemm_microkernel.cpp",
+    "file": "/Users/kelvinfeng/my_code/gemm/src/gemm_microkernel.cpp",
+    "output": "CMakeFiles/gemm.dir/src/gemm_microkernel.cpp.o"
+  },
+  {
+    "directory": "/Users/kelvinfeng/my_code/gemm/build/compiler/O3",
+    "command": "/usr/bin/clang++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=c++17 \"-Rpass=(loop-vectorize|slp-vectorizer|loop-unroll)\" \"-Rpass-missed=(loop-vectorize|slp-vectorizer|loop-unroll)\" \"-Rpass-analysis=(loop-vectorize|slp-vectorizer|loop-unroll)\" -o CMakeFiles/gemm.dir/src/microkernel_tiles.cpp.o -c /Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp",
+    "file": "/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp",
+    "output": "CMakeFiles/gemm.dir/src/microkernel_tiles.cpp.o"
+  },
+  {
+    "directory": "/Users/kelvinfeng/my_code/gemm/build/compiler/O3",
+    "command": "/usr/bin/clang++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=c++17 \"-Rpass=(loop-vectorize|slp-vectorizer|loop-unroll)\" \"-Rpass-missed=(loop-vectorize|slp-vectorizer|loop-unroll)\" \"-Rpass-analysis=(loop-vectorize|slp-vectorizer|loop-unroll)\" -o CMakeFiles/gemm.dir/src/microkernel_unrolled.cpp.o -c /Users/kelvinfeng/my_code/gemm/src/microkernel_unrolled.cpp",
+    "file": "/Users/kelvinfeng/my_code/gemm/src/microkernel_unrolled.cpp",
+    "output": "CMakeFiles/gemm.dir/src/microkernel_unrolled.cpp.o"
+  },
+  {
+    "directory": "/Users/kelvinfeng/my_code/gemm/build/compiler/O3",
+    "command": "/usr/bin/clang++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=gnu++17 -o CMakeFiles/gemm_benchmark.dir/benchmarks/benchmark_main.cpp.o -c /Users/kelvinfeng/my_code/gemm/benchmarks/benchmark_main.cpp",
+    "file": "/Users/kelvinfeng/my_code/gemm/benchmarks/benchmark_main.cpp",
+    "output": "CMakeFiles/gemm_benchmark.dir/benchmarks/benchmark_main.cpp.o"
+  },
+  {
+    "directory": "/Users/kelvinfeng/my_code/gemm/build/compiler/O3",
+    "command": "/usr/bin/clang++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=gnu++17 -o CMakeFiles/gemm_tests.dir/tests/test_gemm.cpp.o -c /Users/kelvinfeng/my_code/gemm/tests/test_gemm.cpp",
+    "file": "/Users/kelvinfeng/my_code/gemm/tests/test_gemm.cpp",
+    "output": "CMakeFiles/gemm_tests.dir/tests/test_gemm.cpp.o"
+  },
+  {
+    "directory": "/Users/kelvinfeng/my_code/gemm/build/compiler/O3",
+    "command": "/usr/bin/clang++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=gnu++17 -o CMakeFiles/gemm_blocked_tests.dir/tests/test_blocked.cpp.o -c /Users/kelvinfeng/my_code/gemm/tests/test_blocked.cpp",
+    "file": "/Users/kelvinfeng/my_code/gemm/tests/test_blocked.cpp",
+    "output": "CMakeFiles/gemm_blocked_tests.dir/tests/test_blocked.cpp.o"
+  },
+  {
+    "directory": "/Users/kelvinfeng/my_code/gemm/build/compiler/O3",
+    "command": "/usr/bin/clang++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=gnu++17 -o CMakeFiles/gemm_microkernel_tests.dir/tests/test_microkernel.cpp.o -c /Users/kelvinfeng/my_code/gemm/tests/test_microkernel.cpp",
+    "file": "/Users/kelvinfeng/my_code/gemm/tests/test_microkernel.cpp",
+    "output": "CMakeFiles/gemm_microkernel_tests.dir/tests/test_microkernel.cpp.o"
+  }
+]

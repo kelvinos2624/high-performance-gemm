@@ -1,0 +1,2 @@
+implementation,M,N,K,time_ms,gflops,repetitions,warmups,threads,seed_A,seed_B,checksum,BM,BN,BK,MR,NR,unroll
+naive_ijk,64,1,257,0.0085,3.87011764706,5,1,1,42,43,-199.613442719,0,0,0,0,0,0

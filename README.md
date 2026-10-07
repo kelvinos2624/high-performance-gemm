@@ -2,9 +2,9 @@
 
 A C++17 performance-engineering project that starts with a correct, deliberately
 naive matrix multiplication and advances through measured experiments. This is
-**Milestone 5**: contiguous row-major `float` matrices, a scalar reference with
+**Milestone 6**: contiguous row-major `float` matrices, a scalar reference with
 double accumulation, all six loop orders, configurable cache and register blocking,
-controlled K-loop unrolling,
+controlled K-loop unrolling, compiler/vectorization experiments,
 correctness tests, and a CSV benchmark.
 The original `naive_ijk` remains the unchanged Milestone 1 kernel.
 
@@ -101,10 +101,10 @@ commands for supported generators. Do not compare Debug timings to Release.
 See [the project charter](docs/project_charter.md),
 [experiment log](docs/optimization_log.md), and
 [loop-order analysis](docs/loop_orders.md), [cache-blocking experiment](docs/cache_blocking.md),
-the [microkernel experiment](docs/microkernels.md), and [unrolling experiment](docs/unrolling.md)
+the [microkernel experiment](docs/microkernels.md), [unrolling experiment](docs/unrolling.md),
+and [compiler analysis](docs/compiler_analysis.md)
 for access patterns, design choices, cache capacities, and measured results.
-Broader vectorization studies, explicit SIMD,
-and multicore execution come later.
+Explicit SIMD remains an optional follow-up; multicore execution comes later.
 
 Regenerate the comparison plot with Python 3 and matplotlib (plotting is optional
 and is not a C++ build dependency):
@@ -167,3 +167,22 @@ tail correctness, and measured tradeoffs. Manual unrolling is retained as an
 experiment, not assumed to be faster.
 
 ![K-loop unroll comparison](results/plots/unroll.png)
+
+Milestone 6 compares O0/O2/O3/native and a vectorization-disabled control with
+unchanged kernel source. The preparation script requires Clang, saves remarks
+and assembly, and runs all correctness suites before measurement:
+
+```sh
+python3 scripts/compiler_experiment.py prepare --cmake cmake --compiler /usr/bin/clang++
+python3 scripts/compiler_experiment.py benchmark --output results/raw/compiler-primary.csv
+python3 scripts/compiler_experiment.py benchmark --reverse --output results/raw/compiler-reverse.csv
+python3 scripts/plot_compiler.py results/raw/compiler-primary.csv
+```
+
+The compiler-study CSV prepends a `build` column to the usual benchmark columns.
+Use a fresh preparation after source edits. Assembly summaries are specific to
+the recorded ARM64 output. For ordinary builds, diagnostics are optional:
+`-DGEMM_VECTORIZATION_REPORTS=ON` emits Clang remarks or GCC vector reports.
+Native tuning remains OFF by default and no fast-math policy is introduced.
+
+![Compiler comparison](results/plots/compiler.png)

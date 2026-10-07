@@ -1,0 +1,3 @@
+/Users/kelvinfeng/my_code/gemm/src/gemm_blocked.cpp:35:25: remark: loop not vectorized [-Rpass-missed=loop-vectorize]
+                        for (std::size_t j = jj; j < j_end; ++j) {
+                        ^

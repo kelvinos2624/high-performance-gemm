@@ -1,0 +1,320 @@
+{
+  "scope": "Static function inventory includes specialized paths and cleanup; not runtime counts. O0 tile wrapper calls a separate template body.",
+  "functions": [
+    {
+      "build": "O0",
+      "function": "naive_ijk",
+      "file": "results/compiler/O0/gemm_naive.cpp.s",
+      "start_line": 5,
+      "end_line": 102,
+      "scalar_fmadd_sites": 1,
+      "vector_fmla_sites": 0,
+      "vector_fmul_sites": 0,
+      "call_sites": [],
+      "instruction_count": 74,
+      "instruction_text_sha256": "bc046c2fd6811a614c3432a734658289fe7f2695b04f07bb4572d7f26651904f"
+    },
+    {
+      "build": "O0",
+      "function": "ikj",
+      "file": "results/compiler/O0/gemm_loop_order.cpp.s",
+      "start_line": 5,
+      "end_line": 125,
+      "scalar_fmadd_sites": 1,
+      "vector_fmla_sites": 0,
+      "vector_fmul_sites": 0,
+      "call_sites": [
+        "bl\t__ZN4gemm12_GLOBAL__N_111zero_outputEPfmm"
+      ],
+      "instruction_count": 91,
+      "instruction_text_sha256": "8a960bbbe841a44239214d6dfb2dec85336a51d1fd8f33ae8288c5af77d3b597"
+    },
+    {
+      "build": "O0",
+      "function": "blocked",
+      "file": "results/compiler/O0/gemm_blocked.cpp.s",
+      "start_line": 5,
+      "end_line": 308,
+      "scalar_fmadd_sites": 1,
+      "vector_fmla_sites": 0,
+      "vector_fmul_sites": 0,
+      "call_sites": [
+        "bl\t___cxa_allocate_exception",
+        "bl\t__ZNSt16invalid_argumentC1B6v15006EPKc",
+        "bl\t___cxa_throw",
+        "bl\t___cxa_free_exception",
+        "bl\t__ZNSt3__13minB6v15006ImEERKT_S3_S3_",
+        "bl\t__ZNSt3__13minB6v15006ImEERKT_S3_S3_",
+        "bl\t__ZNSt3__13minB6v15006ImEERKT_S3_S3_",
+        "bl\t__Unwind_Resume"
+      ],
+      "instruction_count": 223,
+      "instruction_text_sha256": "4b90db205e1aab88a7fd7677dc48eb4134bdaa02fd8c6f1283f9113a279c6cde"
+    },
+    {
+      "build": "O0",
+      "function": "tile_4x4",
+      "file": "results/compiler/O0/microkernel_tiles.cpp.s",
+      "start_line": 267,
+      "end_line": 293,
+      "scalar_fmadd_sites": 0,
+      "vector_fmla_sites": 0,
+      "vector_fmul_sites": 0,
+      "call_sites": [
+        "bl\t__ZN4gemm6detail12_GLOBAL__N_14tileILm4ELm4EEEvPKfS4_Pfmmm"
+      ],
+      "instruction_count": 18,
+      "instruction_text_sha256": "70490791f5a67632f8e1cf9940e5515e2830bc0d3fff58ff646f108884468321"
+    },
+    {
+      "build": "O2",
+      "function": "naive_ijk",
+      "file": "results/compiler/O2/gemm_naive.cpp.s",
+      "start_line": 5,
+      "end_line": 136,
+      "scalar_fmadd_sites": 1,
+      "vector_fmla_sites": 0,
+      "vector_fmul_sites": 4,
+      "call_sites": [],
+      "instruction_count": 97,
+      "instruction_text_sha256": "e90b835905b6d9e5331020e93c18ae3843815551fef8f9d691a4fd8d56131d51"
+    },
+    {
+      "build": "O2",
+      "function": "ikj",
+      "file": "results/compiler/O2/gemm_loop_order.cpp.s",
+      "start_line": 5,
+      "end_line": 139,
+      "scalar_fmadd_sites": 1,
+      "vector_fmla_sites": 4,
+      "vector_fmul_sites": 0,
+      "call_sites": [
+        "bl\t_bzero"
+      ],
+      "instruction_count": 93,
+      "instruction_text_sha256": "9b77a72b0dbc7fadac47fc1feec50fd5938c084297a5ab1a4d024969827d439b"
+    },
+    {
+      "build": "O2",
+      "function": "blocked",
+      "file": "results/compiler/O2/gemm_blocked.cpp.s",
+      "start_line": 5,
+      "end_line": 306,
+      "scalar_fmadd_sites": 1,
+      "vector_fmla_sites": 4,
+      "vector_fmul_sites": 0,
+      "call_sites": [
+        "bl\t_bzero",
+        "bl\t___cxa_allocate_exception",
+        "bl\t__ZNSt16invalid_argumentC1B6v15006EPKc",
+        "bl\t___cxa_throw",
+        "bl\t___cxa_free_exception",
+        "bl\t__Unwind_Resume"
+      ],
+      "instruction_count": 196,
+      "instruction_text_sha256": "cb11307bb5d1e5f15c8dd04d7d63bc66efd18dcba58bd999b4b3c2be95c926c1"
+    },
+    {
+      "build": "O2",
+      "function": "tile_4x4",
+      "file": "results/compiler/O2/microkernel_tiles.cpp.s",
+      "start_line": 48,
+      "end_line": 115,
+      "scalar_fmadd_sites": 16,
+      "vector_fmla_sites": 0,
+      "vector_fmul_sites": 0,
+      "call_sites": [],
+      "instruction_count": 60,
+      "instruction_text_sha256": "f11b2ba3967e7c4d8c10d55b18dbecfccc03b168b17ec69294653964e68d08bb"
+    },
+    {
+      "build": "O3",
+      "function": "naive_ijk",
+      "file": "results/compiler/O3/gemm_naive.cpp.s",
+      "start_line": 5,
+      "end_line": 198,
+      "scalar_fmadd_sites": 3,
+      "vector_fmla_sites": 0,
+      "vector_fmul_sites": 4,
+      "call_sites": [
+        "bl\t_bzero"
+      ],
+      "instruction_count": 143,
+      "instruction_text_sha256": "c85f12c860c19660a3cadae96d71a7d022d0a2b955a7ad4b7453fe86a743f46a"
+    },
+    {
+      "build": "O3",
+      "function": "ikj",
+      "file": "results/compiler/O3/gemm_loop_order.cpp.s",
+      "start_line": 5,
+      "end_line": 175,
+      "scalar_fmadd_sites": 2,
+      "vector_fmla_sites": 4,
+      "vector_fmul_sites": 0,
+      "call_sites": [
+        "bl\t_bzero"
+      ],
+      "instruction_count": 117,
+      "instruction_text_sha256": "881306a69b8a5f23ed3ff48650ee97455b524e00889d5d8583f0e0c1417ebd74"
+    },
+    {
+      "build": "O3",
+      "function": "blocked",
+      "file": "results/compiler/O3/gemm_blocked.cpp.s",
+      "start_line": 5,
+      "end_line": 363,
+      "scalar_fmadd_sites": 2,
+      "vector_fmla_sites": 4,
+      "vector_fmul_sites": 0,
+      "call_sites": [
+        "bl\t_bzero",
+        "bl\t___cxa_allocate_exception",
+        "bl\t__ZNSt16invalid_argumentC1B6v15006EPKc",
+        "bl\t___cxa_throw",
+        "bl\t___cxa_free_exception",
+        "bl\t__Unwind_Resume"
+      ],
+      "instruction_count": 223,
+      "instruction_text_sha256": "b6a7e7a6edd6059e0efcc1fb97096fe01401205ad237ceb23813fac04f025cac"
+    },
+    {
+      "build": "O3",
+      "function": "tile_4x4",
+      "file": "results/compiler/O3/microkernel_tiles.cpp.s",
+      "start_line": 48,
+      "end_line": 115,
+      "scalar_fmadd_sites": 16,
+      "vector_fmla_sites": 0,
+      "vector_fmul_sites": 0,
+      "call_sites": [],
+      "instruction_count": 60,
+      "instruction_text_sha256": "f11b2ba3967e7c4d8c10d55b18dbecfccc03b168b17ec69294653964e68d08bb"
+    },
+    {
+      "build": "O3-native",
+      "function": "naive_ijk",
+      "file": "results/compiler/O3-native/gemm_naive.cpp.s",
+      "start_line": 5,
+      "end_line": 198,
+      "scalar_fmadd_sites": 3,
+      "vector_fmla_sites": 0,
+      "vector_fmul_sites": 4,
+      "call_sites": [
+        "bl\t_bzero"
+      ],
+      "instruction_count": 143,
+      "instruction_text_sha256": "c85f12c860c19660a3cadae96d71a7d022d0a2b955a7ad4b7453fe86a743f46a"
+    },
+    {
+      "build": "O3-native",
+      "function": "ikj",
+      "file": "results/compiler/O3-native/gemm_loop_order.cpp.s",
+      "start_line": 5,
+      "end_line": 175,
+      "scalar_fmadd_sites": 2,
+      "vector_fmla_sites": 4,
+      "vector_fmul_sites": 0,
+      "call_sites": [
+        "bl\t_bzero"
+      ],
+      "instruction_count": 117,
+      "instruction_text_sha256": "881306a69b8a5f23ed3ff48650ee97455b524e00889d5d8583f0e0c1417ebd74"
+    },
+    {
+      "build": "O3-native",
+      "function": "blocked",
+      "file": "results/compiler/O3-native/gemm_blocked.cpp.s",
+      "start_line": 5,
+      "end_line": 363,
+      "scalar_fmadd_sites": 2,
+      "vector_fmla_sites": 4,
+      "vector_fmul_sites": 0,
+      "call_sites": [
+        "bl\t_bzero",
+        "bl\t___cxa_allocate_exception",
+        "bl\t__ZNSt16invalid_argumentC1B6v15006EPKc",
+        "bl\t___cxa_throw",
+        "bl\t___cxa_free_exception",
+        "bl\t__Unwind_Resume"
+      ],
+      "instruction_count": 223,
+      "instruction_text_sha256": "b6a7e7a6edd6059e0efcc1fb97096fe01401205ad237ceb23813fac04f025cac"
+    },
+    {
+      "build": "O3-native",
+      "function": "tile_4x4",
+      "file": "results/compiler/O3-native/microkernel_tiles.cpp.s",
+      "start_line": 48,
+      "end_line": 115,
+      "scalar_fmadd_sites": 16,
+      "vector_fmla_sites": 0,
+      "vector_fmul_sites": 0,
+      "call_sites": [],
+      "instruction_count": 60,
+      "instruction_text_sha256": "f11b2ba3967e7c4d8c10d55b18dbecfccc03b168b17ec69294653964e68d08bb"
+    },
+    {
+      "build": "O3-no-vector",
+      "function": "naive_ijk",
+      "file": "results/compiler/O3-no-vector/gemm_naive.cpp.s",
+      "start_line": 5,
+      "end_line": 67,
+      "scalar_fmadd_sites": 1,
+      "vector_fmla_sites": 0,
+      "vector_fmul_sites": 0,
+      "call_sites": [
+        "bl\t_bzero"
+      ],
+      "instruction_count": 37,
+      "instruction_text_sha256": "43d3965fd4a96d1b54711df8dac2594e79ccb4d8349108cc83451910e570e5a6"
+    },
+    {
+      "build": "O3-no-vector",
+      "function": "ikj",
+      "file": "results/compiler/O3-no-vector/gemm_loop_order.cpp.s",
+      "start_line": 5,
+      "end_line": 83,
+      "scalar_fmadd_sites": 1,
+      "vector_fmla_sites": 0,
+      "vector_fmul_sites": 0,
+      "call_sites": [
+        "bl\t_bzero"
+      ],
+      "instruction_count": 47,
+      "instruction_text_sha256": "aae15777a938fd07bbeda6be08a8d886871533b2b26c2087cdc2e201ca7ca183"
+    },
+    {
+      "build": "O3-no-vector",
+      "function": "blocked",
+      "file": "results/compiler/O3-no-vector/gemm_blocked.cpp.s",
+      "start_line": 5,
+      "end_line": 209,
+      "scalar_fmadd_sites": 1,
+      "vector_fmla_sites": 0,
+      "vector_fmul_sites": 0,
+      "call_sites": [
+        "bl\t_bzero",
+        "bl\t___cxa_allocate_exception",
+        "bl\t__ZNSt16invalid_argumentC1B6v15006EPKc",
+        "bl\t___cxa_throw",
+        "bl\t___cxa_free_exception",
+        "bl\t__Unwind_Resume"
+      ],
+      "instruction_count": 114,
+      "instruction_text_sha256": "359331c363793286210c68941ac5b6dbcef137594598c4b31d043a6531ff9670"
+    },
+    {
+      "build": "O3-no-vector",
+      "function": "tile_4x4",
+      "file": "results/compiler/O3-no-vector/microkernel_tiles.cpp.s",
+      "start_line": 48,
+      "end_line": 115,
+      "scalar_fmadd_sites": 16,
+      "vector_fmla_sites": 0,
+      "vector_fmul_sites": 0,
+      "call_sites": [],
+      "instruction_count": 60,
+      "instruction_text_sha256": "f11b2ba3967e7c4d8c10d55b18dbecfccc03b168b17ec69294653964e68d08bb"
+    }
+  ]
+}

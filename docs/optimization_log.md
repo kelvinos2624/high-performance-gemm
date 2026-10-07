@@ -152,3 +152,26 @@ not reproduce in the follow-up; its cause is unknown and the original is retaine
 **Decision:** keep factor 1 as default and preserve the others as experiments.
 Debug, Release, sanitizer, CLI/CSV checks and all 54 benchmark reference guards
 passed. See [results and assembly guide](unrolling.md).
+
+## Milestone 6 — compiler optimization and auto-vectorization (2026-10-06)
+
+**Hypothesis:** contiguous `ikj`/blocked loops benefit from auto-vectorization;
+scalar 4×4 and the naive general-N reduction should show smaller sensitivity.
+Native tuning is tested rather than assumed helpful.
+
+**Change:** add opt-in Clang/GCC vectorization reports and a fixed Clang
+experiment covering O0, O2, O3, O3-native, and O3 with both vectorizers disabled.
+Numerical kernels are unchanged. Build/test all variants, inspect reports and
+actual assembly, then run matched primary/reverse sweeps on four shapes.
+
+**Evidence:** at 512³, O3 `ikj` is 27.21/27.50 GFLOP/s versus 6.28/6.23 without
+vectorizers. Blocked is 30.58/30.99 versus 5.49/5.48. The scalar 4×4 stays near
+24 GFLOP/s. Naive's report says vectorized, but the vector path is guarded by
+N=1; tested general-N shapes use scalar FMA. `ikj` has runtime alias checks and
+a vector FMA fast path. Selected O3 and native instruction bodies are identical.
+
+**Decision:** retain current defaults; diagnostics are optional. No explicit SIMD,
+restrict, or fast-math introduced. The compiler already vectorizes contiguous
+loops, while the scalar 4×4 is a possible target for a separate SIMD experiment.
+All five builds passed all three correctness suites, all 160 sweep guards passed,
+and an N=1 specialization check passed. See [full analysis](compiler_analysis.md).

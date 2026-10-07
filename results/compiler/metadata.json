@@ -1,0 +1,434 @@
+{
+  "compiler": "Apple clang version 14.0.3 (clang-1403.0.22.14.1)\nTarget: arm64-apple-darwin23.6.0\nThread model: posix\nInstalledDir: /Library/Developer/CommandLineTools/usr/bin\n",
+  "variants": {
+    "O0": {
+      "configure": [
+        "/private/tmp/gemm-cmake/cmake/data/bin/cmake",
+        "-S",
+        "/Users/kelvinfeng/my_code/gemm",
+        "-B",
+        "/Users/kelvinfeng/my_code/gemm/build/compiler/O0",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_CXX_COMPILER=/usr/bin/clang++",
+        "-DCMAKE_CXX_FLAGS_RELEASE=-O0 -DNDEBUG",
+        "-DGEMM_VECTORIZATION_REPORTS=ON",
+        "-DGEMM_NATIVE_ARCH=OFF"
+      ],
+      "assembly_commands": [
+        [
+          "/usr/bin/clang++",
+          "-I/Users/kelvinfeng/my_code/gemm/include",
+          "-O0",
+          "-DNDEBUG",
+          "-std=c++17",
+          "-Rpass=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-missed=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-analysis=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-o",
+          "/Users/kelvinfeng/my_code/gemm/results/compiler/O0/gemm_naive.cpp.s",
+          "-S",
+          "/Users/kelvinfeng/my_code/gemm/src/gemm_naive.cpp"
+        ],
+        [
+          "/usr/bin/clang++",
+          "-I/Users/kelvinfeng/my_code/gemm/include",
+          "-O0",
+          "-DNDEBUG",
+          "-std=c++17",
+          "-Rpass=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-missed=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-analysis=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-o",
+          "/Users/kelvinfeng/my_code/gemm/results/compiler/O0/gemm_loop_order.cpp.s",
+          "-S",
+          "/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp"
+        ],
+        [
+          "/usr/bin/clang++",
+          "-I/Users/kelvinfeng/my_code/gemm/include",
+          "-O0",
+          "-DNDEBUG",
+          "-std=c++17",
+          "-Rpass=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-missed=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-analysis=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-o",
+          "/Users/kelvinfeng/my_code/gemm/results/compiler/O0/gemm_blocked.cpp.s",
+          "-S",
+          "/Users/kelvinfeng/my_code/gemm/src/gemm_blocked.cpp"
+        ],
+        [
+          "/usr/bin/clang++",
+          "-I/Users/kelvinfeng/my_code/gemm/include",
+          "-O0",
+          "-DNDEBUG",
+          "-std=c++17",
+          "-Rpass=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-missed=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-analysis=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-o",
+          "/Users/kelvinfeng/my_code/gemm/results/compiler/O0/microkernel_tiles.cpp.s",
+          "-S",
+          "/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp"
+        ]
+      ]
+    },
+    "O2": {
+      "configure": [
+        "/private/tmp/gemm-cmake/cmake/data/bin/cmake",
+        "-S",
+        "/Users/kelvinfeng/my_code/gemm",
+        "-B",
+        "/Users/kelvinfeng/my_code/gemm/build/compiler/O2",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_CXX_COMPILER=/usr/bin/clang++",
+        "-DCMAKE_CXX_FLAGS_RELEASE=-O2 -DNDEBUG",
+        "-DGEMM_VECTORIZATION_REPORTS=ON",
+        "-DGEMM_NATIVE_ARCH=OFF"
+      ],
+      "assembly_commands": [
+        [
+          "/usr/bin/clang++",
+          "-I/Users/kelvinfeng/my_code/gemm/include",
+          "-O2",
+          "-DNDEBUG",
+          "-std=c++17",
+          "-Rpass=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-missed=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-analysis=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-o",
+          "/Users/kelvinfeng/my_code/gemm/results/compiler/O2/gemm_naive.cpp.s",
+          "-S",
+          "/Users/kelvinfeng/my_code/gemm/src/gemm_naive.cpp"
+        ],
+        [
+          "/usr/bin/clang++",
+          "-I/Users/kelvinfeng/my_code/gemm/include",
+          "-O2",
+          "-DNDEBUG",
+          "-std=c++17",
+          "-Rpass=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-missed=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-analysis=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-o",
+          "/Users/kelvinfeng/my_code/gemm/results/compiler/O2/gemm_loop_order.cpp.s",
+          "-S",
+          "/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp"
+        ],
+        [
+          "/usr/bin/clang++",
+          "-I/Users/kelvinfeng/my_code/gemm/include",
+          "-O2",
+          "-DNDEBUG",
+          "-std=c++17",
+          "-Rpass=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-missed=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-analysis=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-o",
+          "/Users/kelvinfeng/my_code/gemm/results/compiler/O2/gemm_blocked.cpp.s",
+          "-S",
+          "/Users/kelvinfeng/my_code/gemm/src/gemm_blocked.cpp"
+        ],
+        [
+          "/usr/bin/clang++",
+          "-I/Users/kelvinfeng/my_code/gemm/include",
+          "-O2",
+          "-DNDEBUG",
+          "-std=c++17",
+          "-Rpass=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-missed=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-analysis=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-o",
+          "/Users/kelvinfeng/my_code/gemm/results/compiler/O2/microkernel_tiles.cpp.s",
+          "-S",
+          "/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp"
+        ]
+      ]
+    },
+    "O3": {
+      "configure": [
+        "/private/tmp/gemm-cmake/cmake/data/bin/cmake",
+        "-S",
+        "/Users/kelvinfeng/my_code/gemm",
+        "-B",
+        "/Users/kelvinfeng/my_code/gemm/build/compiler/O3",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_CXX_COMPILER=/usr/bin/clang++",
+        "-DCMAKE_CXX_FLAGS_RELEASE=-O3 -DNDEBUG",
+        "-DGEMM_VECTORIZATION_REPORTS=ON",
+        "-DGEMM_NATIVE_ARCH=OFF"
+      ],
+      "assembly_commands": [
+        [
+          "/usr/bin/clang++",
+          "-I/Users/kelvinfeng/my_code/gemm/include",
+          "-O3",
+          "-DNDEBUG",
+          "-std=c++17",
+          "-Rpass=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-missed=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-analysis=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-o",
+          "/Users/kelvinfeng/my_code/gemm/results/compiler/O3/gemm_naive.cpp.s",
+          "-S",
+          "/Users/kelvinfeng/my_code/gemm/src/gemm_naive.cpp"
+        ],
+        [
+          "/usr/bin/clang++",
+          "-I/Users/kelvinfeng/my_code/gemm/include",
+          "-O3",
+          "-DNDEBUG",
+          "-std=c++17",
+          "-Rpass=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-missed=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-analysis=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-o",
+          "/Users/kelvinfeng/my_code/gemm/results/compiler/O3/gemm_loop_order.cpp.s",
+          "-S",
+          "/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp"
+        ],
+        [
+          "/usr/bin/clang++",
+          "-I/Users/kelvinfeng/my_code/gemm/include",
+          "-O3",
+          "-DNDEBUG",
+          "-std=c++17",
+          "-Rpass=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-missed=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-analysis=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-o",
+          "/Users/kelvinfeng/my_code/gemm/results/compiler/O3/gemm_blocked.cpp.s",
+          "-S",
+          "/Users/kelvinfeng/my_code/gemm/src/gemm_blocked.cpp"
+        ],
+        [
+          "/usr/bin/clang++",
+          "-I/Users/kelvinfeng/my_code/gemm/include",
+          "-O3",
+          "-DNDEBUG",
+          "-std=c++17",
+          "-Rpass=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-missed=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-analysis=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-o",
+          "/Users/kelvinfeng/my_code/gemm/results/compiler/O3/microkernel_tiles.cpp.s",
+          "-S",
+          "/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp"
+        ]
+      ]
+    },
+    "O3-native": {
+      "configure": [
+        "/private/tmp/gemm-cmake/cmake/data/bin/cmake",
+        "-S",
+        "/Users/kelvinfeng/my_code/gemm",
+        "-B",
+        "/Users/kelvinfeng/my_code/gemm/build/compiler/O3-native",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_CXX_COMPILER=/usr/bin/clang++",
+        "-DCMAKE_CXX_FLAGS_RELEASE=-O3 -DNDEBUG",
+        "-DGEMM_VECTORIZATION_REPORTS=ON",
+        "-DGEMM_NATIVE_ARCH=ON"
+      ],
+      "assembly_commands": [
+        [
+          "/usr/bin/clang++",
+          "-I/Users/kelvinfeng/my_code/gemm/include",
+          "-O3",
+          "-DNDEBUG",
+          "-std=c++17",
+          "-Rpass=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-missed=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-analysis=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-mcpu=native",
+          "-o",
+          "/Users/kelvinfeng/my_code/gemm/results/compiler/O3-native/gemm_naive.cpp.s",
+          "-S",
+          "/Users/kelvinfeng/my_code/gemm/src/gemm_naive.cpp"
+        ],
+        [
+          "/usr/bin/clang++",
+          "-I/Users/kelvinfeng/my_code/gemm/include",
+          "-O3",
+          "-DNDEBUG",
+          "-std=c++17",
+          "-Rpass=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-missed=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-analysis=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-mcpu=native",
+          "-o",
+          "/Users/kelvinfeng/my_code/gemm/results/compiler/O3-native/gemm_loop_order.cpp.s",
+          "-S",
+          "/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp"
+        ],
+        [
+          "/usr/bin/clang++",
+          "-I/Users/kelvinfeng/my_code/gemm/include",
+          "-O3",
+          "-DNDEBUG",
+          "-std=c++17",
+          "-Rpass=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-missed=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-analysis=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-mcpu=native",
+          "-o",
+          "/Users/kelvinfeng/my_code/gemm/results/compiler/O3-native/gemm_blocked.cpp.s",
+          "-S",
+          "/Users/kelvinfeng/my_code/gemm/src/gemm_blocked.cpp"
+        ],
+        [
+          "/usr/bin/clang++",
+          "-I/Users/kelvinfeng/my_code/gemm/include",
+          "-O3",
+          "-DNDEBUG",
+          "-std=c++17",
+          "-Rpass=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-missed=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-analysis=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-mcpu=native",
+          "-o",
+          "/Users/kelvinfeng/my_code/gemm/results/compiler/O3-native/microkernel_tiles.cpp.s",
+          "-S",
+          "/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp"
+        ]
+      ]
+    },
+    "O3-no-vector": {
+      "configure": [
+        "/private/tmp/gemm-cmake/cmake/data/bin/cmake",
+        "-S",
+        "/Users/kelvinfeng/my_code/gemm",
+        "-B",
+        "/Users/kelvinfeng/my_code/gemm/build/compiler/O3-no-vector",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_CXX_COMPILER=/usr/bin/clang++",
+        "-DCMAKE_CXX_FLAGS_RELEASE=-O3 -DNDEBUG -fno-vectorize -fno-slp-vectorize",
+        "-DGEMM_VECTORIZATION_REPORTS=ON",
+        "-DGEMM_NATIVE_ARCH=OFF"
+      ],
+      "assembly_commands": [
+        [
+          "/usr/bin/clang++",
+          "-I/Users/kelvinfeng/my_code/gemm/include",
+          "-O3",
+          "-DNDEBUG",
+          "-fno-vectorize",
+          "-fno-slp-vectorize",
+          "-std=c++17",
+          "-Rpass=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-missed=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-analysis=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-o",
+          "/Users/kelvinfeng/my_code/gemm/results/compiler/O3-no-vector/gemm_naive.cpp.s",
+          "-S",
+          "/Users/kelvinfeng/my_code/gemm/src/gemm_naive.cpp"
+        ],
+        [
+          "/usr/bin/clang++",
+          "-I/Users/kelvinfeng/my_code/gemm/include",
+          "-O3",
+          "-DNDEBUG",
+          "-fno-vectorize",
+          "-fno-slp-vectorize",
+          "-std=c++17",
+          "-Rpass=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-missed=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-analysis=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-o",
+          "/Users/kelvinfeng/my_code/gemm/results/compiler/O3-no-vector/gemm_loop_order.cpp.s",
+          "-S",
+          "/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp"
+        ],
+        [
+          "/usr/bin/clang++",
+          "-I/Users/kelvinfeng/my_code/gemm/include",
+          "-O3",
+          "-DNDEBUG",
+          "-fno-vectorize",
+          "-fno-slp-vectorize",
+          "-std=c++17",
+          "-Rpass=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-missed=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-analysis=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-o",
+          "/Users/kelvinfeng/my_code/gemm/results/compiler/O3-no-vector/gemm_blocked.cpp.s",
+          "-S",
+          "/Users/kelvinfeng/my_code/gemm/src/gemm_blocked.cpp"
+        ],
+        [
+          "/usr/bin/clang++",
+          "-I/Users/kelvinfeng/my_code/gemm/include",
+          "-O3",
+          "-DNDEBUG",
+          "-fno-vectorize",
+          "-fno-slp-vectorize",
+          "-std=c++17",
+          "-Rpass=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-missed=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-Rpass-analysis=(loop-vectorize|slp-vectorizer|loop-unroll)",
+          "-o",
+          "/Users/kelvinfeng/my_code/gemm/results/compiler/O3-no-vector/microkernel_tiles.cpp.s",
+          "-S",
+          "/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp"
+        ]
+      ]
+    }
+  },
+  "shapes": [
+    [
+      128,
+      128,
+      128
+    ],
+    [
+      256,
+      256,
+      256
+    ],
+    [
+      512,
+      512,
+      512
+    ],
+    [
+      127,
+      193,
+      129
+    ]
+  ],
+  "kernels": [
+    "naive_ijk",
+    "ikj",
+    "blocked",
+    "microkernel"
+  ],
+  "macro_tile": [
+    32,
+    128,
+    32
+  ],
+  "microtile": [
+    4,
+    4
+  ],
+  "unroll": 1,
+  "repetitions": 5,
+  "warmups": 1,
+  "source_sha256": {
+    "CMakeLists.txt": "4770c01475887cbaf5b86dac281ffae62985550fa1980aa755669a0c0fe45259",
+    "src/microkernel_tiles.cpp": "f1d03cc55e01b0ff5ddcea21d3d86550f947b639a029043540796b089e8616e4",
+    "src/gemm_loop_order.cpp": "669eb79847bbe487fe170f0cf2829ff7f214ede42b238efda4fe18909203a1a2",
+    "src/gemm_naive.cpp": "6ef2969603cf62e791acb938117423959a0c3f186325a5653128a24ef1e146ce",
+    "src/matrix.cpp": "364e6555ddc2c17e1d5bc5197fe4fcf833250d9503a0f49757bdee6ea8089636",
+    "src/gemm_reference.cpp": "8440ed04e1bdbf97934be41945810aeeccfbb6bde511c1673e4672640f6c9b81",
+    "src/gemm_blocked.cpp": "39d016f1b8d0895c77795fc1da9a1349a90257e812dcd309036576cf72780a47",
+    "src/gemm_microkernel.cpp": "f351db6a9b55520e368239aa15a7432e94ff058a447ce0b591d1bfd0b35723da",
+    "src/microkernel_tiles.hpp": "d2a194c0dac217608dd7e8160a38e9f3e6a142bf8bfa7e32bd262298292d617e",
+    "src/microkernel_unrolled.cpp": "74881b457e3fc2ebd0b1aed768fa0ad3878c39bc758e48dc3f31b80e0712e4c5",
+    "include/gemm/kernels.hpp": "dd48b384bd2116d7081efe00d6d0dde43e8df0ab32a1c9d86c1f51d5aee8936b",
+    "include/gemm/matrix.hpp": "1d52089e33f27c79b95101eab5cefaa45fe0f6879c58070a09a75865c4a5b64e",
+    "include/gemm/gemm.hpp": "0ec173daae2ca9295e49397aa5ec534f1e2fa25dc9c0ca9214c127960fbddb26",
+    "benchmarks/benchmark_main.cpp": "5d12693ff12d5c96323b96e382d713848284e12c80034a4a03181c0c45a658b6",
+    "scripts/compiler_experiment.py": "905cca0e62d88be561082e9632927d680f049eff67a23ae0f73246d4f0a8746f"
+  }
+}

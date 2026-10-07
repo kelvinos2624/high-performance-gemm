@@ -1,0 +1,18 @@
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:23:13: remark: loop not vectorized [-Rpass-missed=loop-vectorize]
+            for (std::size_t j = 0; j < N; ++j) {
+            ^
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:40:13: remark: loop not vectorized [-Rpass-missed=loop-vectorize]
+            for (std::size_t k = 0; k < K; ++k) {
+            ^
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:37:9: remark: loop not vectorized [-Rpass-missed=loop-vectorize]
+        for (std::size_t i = 0; i < M; ++i) {
+        ^
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:58:13: remark: loop not vectorized [-Rpass-missed=loop-vectorize]
+            for (std::size_t i = 0; i < M; ++i) {
+            ^
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:75:13: remark: loop not vectorized [-Rpass-missed=loop-vectorize]
+            for (std::size_t j = 0; j < N; ++j) {
+            ^
+/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp:92:13: remark: loop not vectorized [-Rpass-missed=loop-vectorize]
+            for (std::size_t i = 0; i < M; ++i) {
+            ^

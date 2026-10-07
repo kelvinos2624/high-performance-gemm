@@ -1,0 +1,22 @@
+[  5%] Building CXX object CMakeFiles/gemm.dir/src/matrix.cpp.o
+[ 17%] Building CXX object CMakeFiles/gemm.dir/src/gemm_loop_order.cpp.o
+[ 29%] Building CXX object CMakeFiles/gemm.dir/src/gemm_reference.cpp.o
+[ 29%] Building CXX object CMakeFiles/gemm.dir/src/gemm_naive.cpp.o
+[ 29%] Building CXX object CMakeFiles/gemm.dir/src/gemm_microkernel.cpp.o
+[ 47%] Building CXX object CMakeFiles/gemm.dir/src/gemm_blocked.cpp.o
+[ 47%] Building CXX object CMakeFiles/gemm.dir/src/microkernel_tiles.cpp.o
+[ 47%] Building CXX object CMakeFiles/gemm.dir/src/microkernel_unrolled.cpp.o
+[ 52%] Linking CXX static library libgemm.a
+[ 52%] Built target gemm
+[ 70%] Building CXX object CMakeFiles/gemm_blocked_tests.dir/tests/test_blocked.cpp.o
+[ 76%] Building CXX object CMakeFiles/gemm_benchmark.dir/benchmarks/benchmark_main.cpp.o
+[ 76%] Building CXX object CMakeFiles/gemm_microkernel_tests.dir/tests/test_microkernel.cpp.o
+[ 76%] Building CXX object CMakeFiles/gemm_tests.dir/tests/test_gemm.cpp.o
+[ 88%] Linking CXX executable gemm_blocked_tests
+[ 88%] Linking CXX executable gemm_microkernel_tests
+[ 94%] Linking CXX executable gemm_tests
+[ 94%] Built target gemm_blocked_tests
+[ 94%] Built target gemm_microkernel_tests
+[ 94%] Built target gemm_tests
+[100%] Linking CXX executable gemm_benchmark
+[100%] Built target gemm_benchmark

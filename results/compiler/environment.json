@@ -1,0 +1,17 @@
+{
+  "recorded_utc": "2026-10-07T03:00:45.085154+00:00",
+  "cpu": "Apple M2 Pro",
+  "architecture": "arm64",
+  "os": "macOS 14.8.3 (23J220)",
+  "cmake": "4.4.4",
+  "commands": [
+    "python3 scripts/compiler_experiment.py prepare --cmake /private/tmp/gemm-cmake/cmake/data/bin/cmake",
+    "python3 scripts/compiler_experiment.py benchmark --output results/raw/compiler-primary.csv",
+    "python3 scripts/compiler_experiment.py benchmark --reverse --output results/raw/compiler-reverse.csv",
+    "./build/compiler/O3/gemm_benchmark --implementation naive_ijk --shape 64 1 257 --repetitions 5"
+  ],
+  "threads": 1,
+  "seed_A": 42,
+  "seed_B": 43,
+  "limits": "No affinity, thermal, frequency, or background-load controls; medians only."
+}
