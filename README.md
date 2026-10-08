@@ -2,9 +2,9 @@
 
 A C++17 performance-engineering project that starts with a correct, deliberately
 naive matrix multiplication and advances through measured experiments. This is
-**Milestone 6**: contiguous row-major `float` matrices, a scalar reference with
+**Milestone 7**: contiguous row-major `float` matrices, a scalar reference with
 double accumulation, all six loop orders, configurable cache and register blocking,
-controlled K-loop unrolling, compiler/vectorization experiments,
+controlled K-loop unrolling, compiler/vectorization experiments, multicore row-strip scheduling,
 correctness tests, and a CSV benchmark.
 The original `naive_ijk` remains the unchanged Milestone 1 kernel.
 
@@ -81,7 +81,7 @@ It reports median milliseconds (averaging the middle pair for even counts) and
 double checksum outside timing. Input seeds are fixed at 42 and 43; the generator
 maps mt19937 output directly to binary fractions in [-1,1).
 
-CSV columns are `implementation,M,N,K,time_ms,gflops,repetitions,warmups,threads,seed_A,seed_B,checksum,BM,BN,BK,MR,NR,unroll`.
+CSV columns are `implementation,M,N,K,time_ms,gflops,repetitions,warmups,threads,seed_A,seed_B,checksum,BM,BN,BK,MR,NR,unroll,schedule,requested_threads`.
 Macro dimensions are zero for unblocked kernels; micro dimensions are zero for
 non-microkernel implementations, as is `unroll`. Earlier saved CSVs predate these appended columns.
 Diagnostics go to stderr. A failed run returns nonzero and may leave a partial CSV;
@@ -104,7 +104,7 @@ See [the project charter](docs/project_charter.md),
 the [microkernel experiment](docs/microkernels.md), [unrolling experiment](docs/unrolling.md),
 and [compiler analysis](docs/compiler_analysis.md)
 for access patterns, design choices, cache capacities, and measured results.
-Explicit SIMD remains an optional follow-up; multicore execution comes later.
+Explicit SIMD remains an optional follow-up; Milestone 7 adds multicore execution.
 
 Regenerate the comparison plot with Python 3 and matplotlib (plotting is optional
 and is not a C++ build dependency):
@@ -186,3 +186,22 @@ the recorded ARM64 output. For ordinary builds, diagnostics are optional:
 Native tuning remains OFF by default and no fast-math policy is introduced.
 
 ![Compiler comparison](results/plots/compiler.png)
+
+
+Milestone 7 adds `parallel`, which reuses the blocked numerical kernel with
+static or dynamic ownership of BM-row strips. Thread startup and joining are
+included in timing; `--threads` counts the caller. Worker count is capped by the
+number of row strips. CSV adds `schedule` and `requested_threads`, while `threads`
+records the capped count. Earlier implementations remain available.
+
+```sh
+build/release/gemm_benchmark --implementation parallel --threads 8 --schedule static --bm 32 --bn 128 --bk 32 1024
+python3 scripts/benchmark_parallel.py --binary build/release/gemm_benchmark --output results/raw/parallel-primary.csv
+python3 scripts/benchmark_parallel.py --binary build/release/gemm_benchmark --reverse --output results/raw/parallel-reverse.csv
+python3 scripts/plot_parallel.py
+```
+
+See [the multicore report](docs/parallel.md) for scaling, scheduling tradeoffs,
+validation, and the short/wide limitation of row-strip ownership.
+
+![Multicore scaling](results/plots/parallel.png)

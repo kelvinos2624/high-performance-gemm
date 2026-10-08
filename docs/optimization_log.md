@@ -175,3 +175,28 @@ restrict, or fast-math introduced. The compiler already vectorizes contiguous
 loops, while the scalar 4×4 is a possible target for a separate SIMD experiment.
 All five builds passed all three correctness suites, all 160 sweep guards passed,
 and an N=1 specialization check passed. See [full analysis](compiler_analysis.md).
+
+
+## Milestone 7 — multicore row strips (2026-10-08)
+
+**Hypothesis:** independent BM-row strips can exploit multiple cores while
+preserving the auto-vectorized blocked arithmetic. Larger shapes should amortize
+thread startup; flat or worse throughput would falsify benefit for a configuration.
+
+**Change:** add a C++17 threads wrapper with static contiguous ranges and a dynamic
+atomic task queue. Each worker owns whole output rows and all K contributions.
+The caller participates; worker counts are capped by row strips. Thread allocation,
+creation, zeroing, and joining remain inside whole-call timing. No earlier
+numerical kernels change. Macrotiles stay fixed at 32/128/32 in the experiment.
+
+**Evidence:** two 60-case sweeps cover five shapes and requests 1/2/4/8/12.
+At 1024³, dynamic twelve-worker throughput is 162.67/167.45 GFLOP/s, or
+7.16×/7.33× serial blocked and 5.91×/6.06× serial ikj. It beats static twelve
+workers by 13.5%/17.1%; the advantage is not universal across worker counts and
+shapes. A 16-row case caps at one worker and does not scale. Initial timing data
+are retained separately after a metadata-only runner failure and rerun.
+
+**Decision:** keep both schedules as explicit experiments, static/one worker as
+default. No automatic tuning, persistent pool, K reduction or hardware-counter
+claim. Release, Debug, ASan/UBSan suites and parallel TSan pass; 120 documented
+benchmark guards pass, plus 60 from the initial sweep. See [full report](parallel.md).

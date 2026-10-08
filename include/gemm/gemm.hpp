@@ -6,7 +6,7 @@ namespace gemm {
 
 // PERF-SEMANTICS: C = A * B. Contiguous row-major A[M,K], B[K,N], C[M,N].
 // Caller supplies valid buffer extents whose index products fit size_t.
-// C must not overlap A or B. No allocation or validation in the kernels.
+// C must not overlap A or B. Configuration validation is documented below.
 // M==0 or N==0: no accesses. K==0: write zeros to C; A/B may be null.
 // Reference accumulates in double and rounds to float once per output.
 void reference(const float* A, const float* B, float* C,
@@ -47,5 +47,15 @@ void microkernel(const float* A, const float* B, float* C,
                  std::size_t M, std::size_t N, std::size_t K,
                  BlockSize tile, std::size_t MR, std::size_t NR,
                  std::size_t unroll = 1);
+
+enum class Schedule { Static, Dynamic };
+
+// Same matrix contract. Positive block dimensions and thread count required.
+// At most ceil(M/BM) workers, including the calling thread. Creates/joins threads
+// per call; invalid configuration throws before buffer access. Launch failure
+// joins started workers and throws; C may then be partially updated.
+void parallel(const float* A, const float* B, float* C,
+              std::size_t M, std::size_t N, std::size_t K, BlockSize tile,
+              std::size_t threads, Schedule schedule = Schedule::Static);
 
 } // namespace gemm

@@ -29,7 +29,9 @@ double checksum(const gemm::Matrix& C) {
 template <typename Function>
 void benchmark(const char* name, Function function, std::size_t M, std::size_t N,
                std::size_t K, std::size_t repetitions, gemm::BlockSize tile,
-               std::size_t MR = 0, std::size_t NR = 0, std::size_t unroll = 0) {
+               std::size_t MR = 0, std::size_t NR = 0, std::size_t unroll = 0,
+               std::size_t threads = 1, const char* schedule = "none",
+               std::size_t requested_threads = 1) {
     // BENCHMARK-IMPORTANT: Allocate, initialize with fixed seeds, and compute
     // the reference outside timing so only the kernel contributes to latency.
     gemm::Matrix A(M, K), B(K, N), C(M, N), expected(M, N);
@@ -76,8 +78,8 @@ void benchmark(const char* name, Function function, std::size_t M, std::size_t N
         static_cast<double>(N) * static_cast<double>(K);
     std::cout << name << ',' << M << ',' << N << ',' << K << ','
               << seconds * 1000.0 << ',' << operations / seconds / 1e9 << ','
-              << repetitions << ",1,1,42,43," << consumed << ','
-              << tile.m << ',' << tile.n << ',' << tile.k << ',' << MR << ',' << NR << ',' << unroll << '\n';
+              << repetitions << ",1," << threads << ",42,43," << consumed << ','
+              << tile.m << ',' << tile.n << ',' << tile.k << ',' << MR << ',' << NR << ',' << unroll << ',' << schedule << ',' << requested_threads << '\n';
 }
 } // namespace
 
@@ -90,16 +92,19 @@ int main(int argc, char** argv) {
         gemm::BlockSize shape{0, 0, 0};
         bool tile_given = false, micro_given = false;
         std::size_t MR = 4, NR = 4, unroll = 1;
-        bool unroll_given = false;
+        bool unroll_given = false, parallel_given = false;
+        std::size_t threads = 1;
+        std::string schedule = "static";
         for (int i = 1; i < argc; ++i) {
             const std::string arg = argv[i];
             if (arg == "--help") {
                 std::cout << "Usage: gemm_benchmark [--repetitions COUNT] [--implementation NAME] [SIZE ...]\n"
                              "Defaults: all implementations; 5 repetitions; sizes 64 128 256 512 1024.\n"
-                             "Names: all (six loop orders), naive_ijk ikj jik jki kij kji blocked microkernel\n"
+                             "Names: all (six loop orders), naive_ijk ikj jik jki kij kji blocked microkernel parallel\n"
                              "Blocked options: --bm M --bn N --bk K (defaults 64 each)\n"
                              "Microkernel options: --mr M --nr N (default 4x4; 2x4,4x4,4x8,8x4,8x8,16x16)\n"
                              "Unrolling: --unroll 1|2|4|8 (microkernel only; >1 requires 4x4)\n"
+                             "Parallel options: --threads COUNT --schedule static|dynamic (defaults 1/static)\n"
                              "Rectangular input: --shape M N K (instead of SIZE arguments)\n";
                 return 0;
             }
@@ -126,6 +131,11 @@ int main(int argc, char** argv) {
                 if (++i == argc) throw std::invalid_argument("Missing unroll factor");
                 unroll = positive_integer(argv[i]);
                 unroll_given = true;
+            } else if (arg == "--threads" || arg == "--schedule") {
+                if (++i == argc) throw std::invalid_argument("Missing parallel option value");
+                if (arg == "--threads") threads = positive_integer(argv[i]);
+                else schedule = argv[i];
+                parallel_given = true;
             } else if (arg == "--shape") {
                 if (shape.m != 0 || argc - i <= 3)
                     throw std::invalid_argument("Specify one --shape M N K");
@@ -136,6 +146,10 @@ int main(int argc, char** argv) {
                 sizes.push_back(positive_integer(arg));
             }
         }
+        if (parallel_given && implementation != "parallel")
+            throw std::invalid_argument("Thread/schedule options require parallel");
+        if (schedule != "static" && schedule != "dynamic")
+            throw std::invalid_argument("Schedule must be static or dynamic");
         std::vector<gemm::Kernel> selected;
         for (const auto& kernel : gemm::kernels) {
             if (implementation == "all" || implementation == kernel.name)
@@ -149,16 +163,26 @@ int main(int argc, char** argv) {
             throw std::invalid_argument("Unroll 2/4/8 requires a 4x4 microtile");
         if (micro_given && implementation != "microkernel")
             throw std::invalid_argument("Microtile options require --implementation microkernel");
-        if (tile_given && implementation != "blocked" && implementation != "microkernel")
-            throw std::invalid_argument("Block options require blocked or microkernel");
+        if (tile_given && implementation != "blocked" && implementation != "microkernel" && implementation != "parallel")
+            throw std::invalid_argument("Block options require blocked, microkernel, or parallel");
         if (shape.m != 0 && !sizes.empty())
             throw std::invalid_argument("Do not mix --shape and square sizes");
-        if (selected.empty() && implementation != "blocked" && implementation != "microkernel") throw std::invalid_argument("Unknown implementation: " + implementation);
+        if (selected.empty() && implementation != "blocked" && implementation != "microkernel" && implementation != "parallel") throw std::invalid_argument("Unknown implementation: " + implementation);
         if (sizes.empty()) sizes = {64, 128, 256, 512, 1024};
         std::cout << std::setprecision(12)
-                  << "implementation,M,N,K,time_ms,gflops,repetitions,warmups,threads,seed_A,seed_B,checksum,BM,BN,BK,MR,NR,unroll\n";
+                  << "implementation,M,N,K,time_ms,gflops,repetitions,warmups,threads,seed_A,seed_B,checksum,BM,BN,BK,MR,NR,unroll,schedule,requested_threads\n";
         const auto run = [&](std::size_t M, std::size_t N, std::size_t K) {
-            if (implementation == "microkernel") {
+            if (implementation == "parallel") {
+                const auto policy = schedule == "static" ? gemm::Schedule::Static : gemm::Schedule::Dynamic;
+                const auto function = [tile, threads, policy](const float* A, const float* B, float* C,
+                                                             std::size_t m, std::size_t n, std::size_t k) {
+                    gemm::parallel(A, B, C, m, n, k, tile, threads, policy);
+                };
+                // BENCHMARK-IMPORTANT: Record both requested and capped worker
+                // counts; the caller is one worker. No persistent pool is used.
+                benchmark("parallel", function, M, N, K, repetitions, tile, 0, 0, 0,
+                          std::min(threads, 1 + (M - 1) / tile.m), schedule.c_str(), threads);
+            } else if (implementation == "microkernel") {
                 const auto function = [tile, MR, NR, unroll](const float* A, const float* B, float* C,
                                                     std::size_t m, std::size_t n, std::size_t k) {
                     gemm::microkernel(A, B, C, m, n, k, tile, MR, NR, unroll);
