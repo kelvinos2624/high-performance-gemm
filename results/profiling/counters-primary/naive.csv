@@ -1,0 +1,2 @@
+implementation,M,N,K,calls,seconds,average_gflops,checksum,threads,requested_threads,schedule,BM,BN,BK,MR,NR,unroll
+naive_ijk,512,512,512,72,10.014771375,1.92988457832,-6048.65486967,1,1,none,0,0,0,0,0,0

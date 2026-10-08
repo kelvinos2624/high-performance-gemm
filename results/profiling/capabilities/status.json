@@ -1,0 +1,25 @@
+{
+  "status": "hardware-counter-capture-pending",
+  "platform": "macOS-14.8.3-arm64-arm-64bit",
+  "active_developer_directory": "/Library/Developer/CommandLineTools",
+  "xctrace": "requires full Xcode; see xctrace.txt",
+  "privileged_probe": {
+    "command": [
+      "sudo",
+      "-n",
+      "powermetrics",
+      "--samplers",
+      "tasks",
+      "--show-process-ipc",
+      "--show-process-amp",
+      "-i",
+      "1000",
+      "-n",
+      "1"
+    ],
+    "exit_code": 1,
+    "stderr": "sudo: a password is required"
+  },
+  "measured_hardware_counters": false,
+  "note": "powermetrics help advertises IPC reporting; availability and schema on this CPU remain unverified until a successful privileged capture."
+}

@@ -1,0 +1,429 @@
+{
+  "status": "workload-validated-no-counters",
+  "utc": "2026-10-08T21:51:53.106857+00:00",
+  "platform": "macOS-14.8.3-arm64-arm-64bit",
+  "machine": "arm64",
+  "mode": "workload-only-no-counters",
+  "binary": "/Users/kelvinfeng/my_code/gemm/build/m8-release/gemm_benchmark",
+  "binary_sha256": "c3b55d1fbdab6bf99a43caa90addbf0248eb161851ba201302e914c63132eb61",
+  "source_sha256": {
+    "CMakeLists.txt": "dce73475afde5673b49ef0fbcb7d1bf160d586d387e0d2d84b73e75127d87346",
+    "benchmarks/benchmark_main.cpp": "eafde9e95cd319a25984156fbb671ed1b7daeb1ea60654d0628d8048ce205bf3",
+    "scripts/profile_counters.py": "39ecc310be5874b0b0c2fda304583d3d8347d65feba637904bbbd67250d4c862",
+    "src/gemm_blocked.cpp": "39d016f1b8d0895c77795fc1da9a1349a90257e812dcd309036576cf72780a47",
+    "src/gemm_loop_order.cpp": "669eb79847bbe487fe170f0cf2829ff7f214ede42b238efda4fe18909203a1a2",
+    "src/gemm_microkernel.cpp": "f351db6a9b55520e368239aa15a7432e94ff058a447ce0b591d1bfd0b35723da",
+    "src/gemm_naive.cpp": "6ef2969603cf62e791acb938117423959a0c3f186325a5653128a24ef1e146ce",
+    "src/gemm_parallel.cpp": "b18386b296835451c4004c71ed69e68390f1b7895a16e25aa093040f7132bf65",
+    "src/gemm_reference.cpp": "8440ed04e1bdbf97934be41945810aeeccfbb6bde511c1673e4672640f6c9b81",
+    "src/matrix.cpp": "364e6555ddc2c17e1d5bc5197fe4fcf833250d9503a0f49757bdee6ea8089636",
+    "src/microkernel_tiles.cpp": "f1d03cc55e01b0ff5ddcea21d3d86550f947b639a029043540796b089e8616e4",
+    "src/microkernel_tiles.hpp": "d2a194c0dac217608dd7e8160a38e9f3e6a142bf8bfa7e32bd262298292d617e",
+    "src/microkernel_unrolled.cpp": "74881b457e3fc2ebd0b1aed768fa0ad3878c39bc758e48dc3f31b80e0712e4c5",
+    "include/gemm/gemm.hpp": "0211e01dc0df215a0033ae0ebbe1382a40321270b1a806df48ab4c626d6e1c29",
+    "include/gemm/kernels.hpp": "dd48b384bd2116d7081efe00d6d0dde43e8df0ab32a1c9d86c1f51d5aee8936b",
+    "include/gemm/matrix.hpp": "1d52089e33f27c79b95101eab5cefaa45fe0f6879c58070a09a75865c4a5b64e"
+  },
+  "cases": [
+    {
+      "name": "naive",
+      "command": [
+        "/Users/kelvinfeng/my_code/gemm/build/m8-release/gemm_benchmark",
+        "--implementation",
+        "naive_ijk",
+        "--profile-seconds",
+        "1",
+        "--profile-wait",
+        "64"
+      ],
+      "events": [
+        {
+          "event": "PROFILE_READY",
+          "wall_time_ns": 1791496313125484000,
+          "monotonic_ns": 56654166
+        },
+        {
+          "event": "GO",
+          "wall_time_ns": 1791496313125487000,
+          "monotonic_ns": 56657000
+        },
+        {
+          "event": "PROFILE_DONE",
+          "wall_time_ns": 1791496314125667000,
+          "monotonic_ns": 1056827958
+        }
+      ],
+      "status": "workload-validated",
+      "pid": 67039,
+      "workload_stderr": ""
+    },
+    {
+      "name": "ikj",
+      "command": [
+        "/Users/kelvinfeng/my_code/gemm/build/m8-release/gemm_benchmark",
+        "--implementation",
+        "ikj",
+        "--profile-seconds",
+        "1",
+        "--profile-wait",
+        "64"
+      ],
+      "events": [
+        {
+          "event": "PROFILE_READY",
+          "wall_time_ns": 1791496314129072000,
+          "monotonic_ns": 1060243458
+        },
+        {
+          "event": "GO",
+          "wall_time_ns": 1791496314129086000,
+          "monotonic_ns": 1060246666
+        },
+        {
+          "event": "PROFILE_DONE",
+          "wall_time_ns": 1791496315129236000,
+          "monotonic_ns": 2060387958
+        }
+      ],
+      "status": "workload-validated",
+      "pid": 67057,
+      "workload_stderr": ""
+    },
+    {
+      "name": "blocked",
+      "command": [
+        "/Users/kelvinfeng/my_code/gemm/build/m8-release/gemm_benchmark",
+        "--implementation",
+        "blocked",
+        "--profile-seconds",
+        "1",
+        "--profile-wait",
+        "64",
+        "--bm",
+        "32",
+        "--bn",
+        "128",
+        "--bk",
+        "32"
+      ],
+      "events": [
+        {
+          "event": "PROFILE_READY",
+          "wall_time_ns": 1791496315133624000,
+          "monotonic_ns": 2064781000
+        },
+        {
+          "event": "GO",
+          "wall_time_ns": 1791496315133633000,
+          "monotonic_ns": 2064783875
+        },
+        {
+          "event": "PROFILE_DONE",
+          "wall_time_ns": 1791496316133778000,
+          "monotonic_ns": 3064921000
+        }
+      ],
+      "status": "workload-validated",
+      "pid": 67058,
+      "workload_stderr": ""
+    },
+    {
+      "name": "micro4",
+      "command": [
+        "/Users/kelvinfeng/my_code/gemm/build/m8-release/gemm_benchmark",
+        "--implementation",
+        "microkernel",
+        "--mr",
+        "4",
+        "--nr",
+        "4",
+        "--profile-seconds",
+        "1",
+        "--profile-wait",
+        "64",
+        "--bm",
+        "32",
+        "--bn",
+        "128",
+        "--bk",
+        "32"
+      ],
+      "events": [
+        {
+          "event": "PROFILE_READY",
+          "wall_time_ns": 1791496316137600000,
+          "monotonic_ns": 3068751708
+        },
+        {
+          "event": "GO",
+          "wall_time_ns": 1791496316137612000,
+          "monotonic_ns": 3068754333
+        },
+        {
+          "event": "PROFILE_DONE",
+          "wall_time_ns": 1791496317137746000,
+          "monotonic_ns": 4068879083
+        }
+      ],
+      "status": "workload-validated",
+      "pid": 67061,
+      "workload_stderr": ""
+    },
+    {
+      "name": "unroll4",
+      "command": [
+        "/Users/kelvinfeng/my_code/gemm/build/m8-release/gemm_benchmark",
+        "--implementation",
+        "microkernel",
+        "--mr",
+        "4",
+        "--nr",
+        "4",
+        "--unroll",
+        "4",
+        "--profile-seconds",
+        "1",
+        "--profile-wait",
+        "64",
+        "--bm",
+        "32",
+        "--bn",
+        "128",
+        "--bk",
+        "32"
+      ],
+      "events": [
+        {
+          "event": "PROFILE_READY",
+          "wall_time_ns": 1791496317141879000,
+          "monotonic_ns": 4073021208
+        },
+        {
+          "event": "GO",
+          "wall_time_ns": 1791496317141891000,
+          "monotonic_ns": 4073024041
+        },
+        {
+          "event": "PROFILE_DONE",
+          "wall_time_ns": 1791496318141990000,
+          "monotonic_ns": 5073114166
+        }
+      ],
+      "status": "workload-validated",
+      "pid": 67064,
+      "workload_stderr": ""
+    },
+    {
+      "name": "static4",
+      "command": [
+        "/Users/kelvinfeng/my_code/gemm/build/m8-release/gemm_benchmark",
+        "--implementation",
+        "parallel",
+        "--threads",
+        "4",
+        "--schedule",
+        "static",
+        "--profile-seconds",
+        "1",
+        "--profile-wait",
+        "64",
+        "--bm",
+        "32",
+        "--bn",
+        "128",
+        "--bk",
+        "32"
+      ],
+      "events": [
+        {
+          "event": "PROFILE_READY",
+          "wall_time_ns": 1791496318145658000,
+          "monotonic_ns": 5076786250
+        },
+        {
+          "event": "GO",
+          "wall_time_ns": 1791496318145668000,
+          "monotonic_ns": 5076792000
+        },
+        {
+          "event": "PROFILE_DONE",
+          "wall_time_ns": 1791496319145799000,
+          "monotonic_ns": 6076914458
+        }
+      ],
+      "status": "workload-validated",
+      "pid": 67065,
+      "workload_stderr": ""
+    },
+    {
+      "name": "static12",
+      "command": [
+        "/Users/kelvinfeng/my_code/gemm/build/m8-release/gemm_benchmark",
+        "--implementation",
+        "parallel",
+        "--threads",
+        "12",
+        "--schedule",
+        "static",
+        "--profile-seconds",
+        "1",
+        "--profile-wait",
+        "64",
+        "--bm",
+        "32",
+        "--bn",
+        "128",
+        "--bk",
+        "32"
+      ],
+      "events": [
+        {
+          "event": "PROFILE_READY",
+          "wall_time_ns": 1791496319150990000,
+          "monotonic_ns": 6082109541
+        },
+        {
+          "event": "GO",
+          "wall_time_ns": 1791496319150998000,
+          "monotonic_ns": 6082112500
+        },
+        {
+          "event": "PROFILE_DONE",
+          "wall_time_ns": 1791496320151089000,
+          "monotonic_ns": 7082195583
+        }
+      ],
+      "status": "workload-validated",
+      "pid": 67070,
+      "workload_stderr": ""
+    },
+    {
+      "name": "dynamic12",
+      "command": [
+        "/Users/kelvinfeng/my_code/gemm/build/m8-release/gemm_benchmark",
+        "--implementation",
+        "parallel",
+        "--threads",
+        "12",
+        "--schedule",
+        "dynamic",
+        "--profile-seconds",
+        "1",
+        "--profile-wait",
+        "64",
+        "--bm",
+        "32",
+        "--bn",
+        "128",
+        "--bk",
+        "32"
+      ],
+      "events": [
+        {
+          "event": "PROFILE_READY",
+          "wall_time_ns": 1791496320155570000,
+          "monotonic_ns": 7086679291
+        },
+        {
+          "event": "GO",
+          "wall_time_ns": 1791496320155577000,
+          "monotonic_ns": 7086682291
+        },
+        {
+          "event": "PROFILE_DONE",
+          "wall_time_ns": 1791496321155680000,
+          "monotonic_ns": 8086777125
+        }
+      ],
+      "status": "workload-validated",
+      "pid": 67073,
+      "workload_stderr": ""
+    }
+  ],
+  "compile_commands": [
+    {
+      "directory": "/Users/kelvinfeng/my_code/gemm/build/m8-release",
+      "command": "/usr/bin/c++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=c++17 -o CMakeFiles/gemm.dir/src/matrix.cpp.o -c /Users/kelvinfeng/my_code/gemm/src/matrix.cpp",
+      "file": "/Users/kelvinfeng/my_code/gemm/src/matrix.cpp",
+      "output": "CMakeFiles/gemm.dir/src/matrix.cpp.o"
+    },
+    {
+      "directory": "/Users/kelvinfeng/my_code/gemm/build/m8-release",
+      "command": "/usr/bin/c++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=c++17 -o CMakeFiles/gemm.dir/src/gemm_reference.cpp.o -c /Users/kelvinfeng/my_code/gemm/src/gemm_reference.cpp",
+      "file": "/Users/kelvinfeng/my_code/gemm/src/gemm_reference.cpp",
+      "output": "CMakeFiles/gemm.dir/src/gemm_reference.cpp.o"
+    },
+    {
+      "directory": "/Users/kelvinfeng/my_code/gemm/build/m8-release",
+      "command": "/usr/bin/c++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=c++17 -o CMakeFiles/gemm.dir/src/gemm_naive.cpp.o -c /Users/kelvinfeng/my_code/gemm/src/gemm_naive.cpp",
+      "file": "/Users/kelvinfeng/my_code/gemm/src/gemm_naive.cpp",
+      "output": "CMakeFiles/gemm.dir/src/gemm_naive.cpp.o"
+    },
+    {
+      "directory": "/Users/kelvinfeng/my_code/gemm/build/m8-release",
+      "command": "/usr/bin/c++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=c++17 -o CMakeFiles/gemm.dir/src/gemm_loop_order.cpp.o -c /Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp",
+      "file": "/Users/kelvinfeng/my_code/gemm/src/gemm_loop_order.cpp",
+      "output": "CMakeFiles/gemm.dir/src/gemm_loop_order.cpp.o"
+    },
+    {
+      "directory": "/Users/kelvinfeng/my_code/gemm/build/m8-release",
+      "command": "/usr/bin/c++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=c++17 -o CMakeFiles/gemm.dir/src/gemm_blocked.cpp.o -c /Users/kelvinfeng/my_code/gemm/src/gemm_blocked.cpp",
+      "file": "/Users/kelvinfeng/my_code/gemm/src/gemm_blocked.cpp",
+      "output": "CMakeFiles/gemm.dir/src/gemm_blocked.cpp.o"
+    },
+    {
+      "directory": "/Users/kelvinfeng/my_code/gemm/build/m8-release",
+      "command": "/usr/bin/c++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=c++17 -o CMakeFiles/gemm.dir/src/gemm_microkernel.cpp.o -c /Users/kelvinfeng/my_code/gemm/src/gemm_microkernel.cpp",
+      "file": "/Users/kelvinfeng/my_code/gemm/src/gemm_microkernel.cpp",
+      "output": "CMakeFiles/gemm.dir/src/gemm_microkernel.cpp.o"
+    },
+    {
+      "directory": "/Users/kelvinfeng/my_code/gemm/build/m8-release",
+      "command": "/usr/bin/c++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=c++17 -o CMakeFiles/gemm.dir/src/microkernel_tiles.cpp.o -c /Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp",
+      "file": "/Users/kelvinfeng/my_code/gemm/src/microkernel_tiles.cpp",
+      "output": "CMakeFiles/gemm.dir/src/microkernel_tiles.cpp.o"
+    },
+    {
+      "directory": "/Users/kelvinfeng/my_code/gemm/build/m8-release",
+      "command": "/usr/bin/c++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=c++17 -o CMakeFiles/gemm.dir/src/microkernel_unrolled.cpp.o -c /Users/kelvinfeng/my_code/gemm/src/microkernel_unrolled.cpp",
+      "file": "/Users/kelvinfeng/my_code/gemm/src/microkernel_unrolled.cpp",
+      "output": "CMakeFiles/gemm.dir/src/microkernel_unrolled.cpp.o"
+    },
+    {
+      "directory": "/Users/kelvinfeng/my_code/gemm/build/m8-release",
+      "command": "/usr/bin/c++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=c++17 -o CMakeFiles/gemm.dir/src/gemm_parallel.cpp.o -c /Users/kelvinfeng/my_code/gemm/src/gemm_parallel.cpp",
+      "file": "/Users/kelvinfeng/my_code/gemm/src/gemm_parallel.cpp",
+      "output": "CMakeFiles/gemm.dir/src/gemm_parallel.cpp.o"
+    },
+    {
+      "directory": "/Users/kelvinfeng/my_code/gemm/build/m8-release",
+      "command": "/usr/bin/c++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=gnu++17 -o CMakeFiles/gemm_benchmark.dir/benchmarks/benchmark_main.cpp.o -c /Users/kelvinfeng/my_code/gemm/benchmarks/benchmark_main.cpp",
+      "file": "/Users/kelvinfeng/my_code/gemm/benchmarks/benchmark_main.cpp",
+      "output": "CMakeFiles/gemm_benchmark.dir/benchmarks/benchmark_main.cpp.o"
+    },
+    {
+      "directory": "/Users/kelvinfeng/my_code/gemm/build/m8-release",
+      "command": "/usr/bin/c++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=gnu++17 -o CMakeFiles/gemm_parallel_tests.dir/tests/test_parallel.cpp.o -c /Users/kelvinfeng/my_code/gemm/tests/test_parallel.cpp",
+      "file": "/Users/kelvinfeng/my_code/gemm/tests/test_parallel.cpp",
+      "output": "CMakeFiles/gemm_parallel_tests.dir/tests/test_parallel.cpp.o"
+    },
+    {
+      "directory": "/Users/kelvinfeng/my_code/gemm/build/m8-release",
+      "command": "/usr/bin/c++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=gnu++17 -o CMakeFiles/gemm_tests.dir/tests/test_gemm.cpp.o -c /Users/kelvinfeng/my_code/gemm/tests/test_gemm.cpp",
+      "file": "/Users/kelvinfeng/my_code/gemm/tests/test_gemm.cpp",
+      "output": "CMakeFiles/gemm_tests.dir/tests/test_gemm.cpp.o"
+    },
+    {
+      "directory": "/Users/kelvinfeng/my_code/gemm/build/m8-release",
+      "command": "/usr/bin/c++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=gnu++17 -o CMakeFiles/gemm_blocked_tests.dir/tests/test_blocked.cpp.o -c /Users/kelvinfeng/my_code/gemm/tests/test_blocked.cpp",
+      "file": "/Users/kelvinfeng/my_code/gemm/tests/test_blocked.cpp",
+      "output": "CMakeFiles/gemm_blocked_tests.dir/tests/test_blocked.cpp.o"
+    },
+    {
+      "directory": "/Users/kelvinfeng/my_code/gemm/build/m8-release",
+      "command": "/usr/bin/c++  -I/Users/kelvinfeng/my_code/gemm/include -O3 -DNDEBUG -std=gnu++17 -o CMakeFiles/gemm_microkernel_tests.dir/tests/test_microkernel.cpp.o -c /Users/kelvinfeng/my_code/gemm/tests/test_microkernel.cpp",
+      "file": "/Users/kelvinfeng/my_code/gemm/tests/test_microkernel.cpp",
+      "output": "CMakeFiles/gemm_microkernel_tests.dir/tests/test_microkernel.cpp.o"
+    }
+  ]
+}

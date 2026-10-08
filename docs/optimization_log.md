@@ -200,3 +200,53 @@ are retained separately after a metadata-only runner failure and rerun.
 default. No automatic tuning, persistent pool, K reduction or hardware-counter
 claim. Release, Debug, ASan/UBSan suites and parallel TSan pass; 120 documented
 benchmark guards pass, plus 60 from the initial sweep. See [full report](parallel.md).
+
+
+## Milestone 8 — hardware profiling preparation (2026-10-08; incomplete)
+
+**Question:** can counters substantiate the locality, instruction-throughput and
+multicore explanations suggested by earlier timing and assembly evidence?
+
+**Change:** add an explicitly selected sustained profiling mode to the existing
+benchmark. Setup/reference/warmup precede a READY/GO boundary; final correctness
+validation follows the interval. Add a macOS powermetrics collector with PID,
+phase timestamps, raw output, build/source hashes and explicit failure status.
+Numerical kernels are unchanged. No NEON work or new optimization is included.
+
+**Validation:** all four Release suites pass. Profiling protocol checks cover
+waiting for GO, rejecting invalid input/options and preserving ordinary CSV
+behavior. Eight workload-only cases pass before/after correctness guards. Saved
+smoke timings are not counter measurements or new performance conclusions.
+
+**Blocker/evidence:** xctrace requires full Xcode; only Command Line Tools are
+installed. powermetrics advertises per-process IPC but the privileged probe
+requires a sudo password. Actual event availability and schema remain unverified.
+No cache misses, IPC, instruction counts or bandwidth values have been measured.
+
+**Next required step:** authenticated primary/reverse captures, field and interval
+validation, then counter-backed analysis. Marking the milestone complete before
+that would be misleading. See [methodology, hypotheses and commands](profiling.md).
+
+
+### Milestone 8 capture review (2026-10-08)
+
+The user completed both authenticated captures. Sixteen workloads passed their
+before/after checks; source and binary hashes match across both sweeps and the
+reviewed build. Added schema-aware, PID-specific analysis with conservative
+whole-second timestamp bounds and seven synthetic selection/error-path tests.
+Of 224 raw intervals, 108 interior intervals are retained; IPC uses summed
+instructions divided by summed cycles, not an average of per-sample ratios.
+
+Reported IPC at 512³ repeats closely: naive 1.70–1.72, ikj 3.27, blocked 4.40,
+scalar 4×4 6.42–6.44, unroll-4 5.79. Scalar micro4's higher IPC accompanies lower
+throughput than blocked, illustrating why IPC alone cannot rank GEMM efficiency.
+Twelve-worker runs account for 8.3–8.7 CPU-equivalents and mix core types.
+These are process-wide measurements, not isolated arithmetic-loop counts.
+
+**Qualification:** every collector emitted `Second underflow occured.` without
+PID/time attribution. The observed target records are finite and internally
+consistent, but the warning's effect cannot be ruled out. All analysis records
+are therefore explicitly provisional. No cache or bandwidth counters were
+collected; no memory-bandwidth bottleneck or misses/FLOP claim is made. Raw
+captures remain unchanged. Profiling/analysis work is delivered; warning-free
+counter validation remains unresolved. See [reviewed report](profiling.md).

@@ -205,3 +205,37 @@ See [the multicore report](docs/parallel.md) for scaling, scheduling tradeoffs,
 validation, and the short/wide limitation of row-strip ownership.
 
 ![Multicore scaling](results/plots/parallel.png)
+
+
+## Milestone 8 — hardware profiling (provisional counter findings)
+
+Both eight-case hardware-counter sweeps have been captured and analyzed. At
+512³, scalar 4×4 reports about 6.4 IPC versus blocked's 4.4, yet remains slower:
+IPC alone does not measure useful numerical work. Twelve-worker runs report
+about 8.3–8.7 CPU-equivalents, with mixed core types. Every capture also contains
+an unlocalized collector underflow warning, so counter findings remain
+**provisional**. See [results, methodology and limitations](docs/profiling.md).
+
+```sh
+cmake -S . -B build/m8-release -DCMAKE_BUILD_TYPE=Release
+cmake --build build/m8-release --parallel
+ctest --test-dir build/m8-release --output-on-failure
+python3 tests/test_profile_protocol.py build/m8-release/gemm_benchmark
+sudo -v
+python3 scripts/profile_counters.py --output results/profiling/counters-primary
+python3 scripts/profile_counters.py --reverse --output results/profiling/counters-reverse
+```
+
+Run these locally as your normal user; only the collector uses administrator
+access. Profiling mode validates before and after a sustained workload and emits
+a separate CSV with average throughput. Captures retain raw samples, target PID,
+phase timestamps and build metadata. Raw captures are preserved; ordinary smoke runs contain no hardware counters.
+Reproduce the reviewed analysis without administrator access:
+
+```sh
+python3 scripts/analyze_counters.py results/profiling/counters-primary results/profiling/counters-reverse --output results/profiling/analysis.json
+PYTHONDONTWRITEBYTECODE=1 python3 tests/test_counter_analysis.py
+```
+
+The analysis records six or seven interior samples per case and retains warning
+flags. Cache misses and DRAM bandwidth were not measured.

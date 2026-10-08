@@ -1,0 +1,27 @@
+Read-only inspection of installed /usr/bin/powermetrics
+Command: otool -tvV /usr/bin/powermetrics
+SHA256: dd14e199362c46840b3ed0b34698d7f9290be352bec69420b6551e206aee30eb
+The excerpt identifies a task subtraction path, not the affected PID or counter.
+
+000000010000ab34	add	x3, sp, #0xba0
+000000010000ab38	mov	x0, x20
+000000010000ab3c	mov	x1, x25
+000000010000ab40	mov	x2, x20
+000000010000ab44	mov	w4, #0x2
+000000010000ab48	bl	0x100011f60 ; symbol stub for: _pm_task_subtract_version
+000000010000ab4c	ldrb	w8, [sp, #0xba0]
+000000010000ab50	strb	w8, [x20, #0x1c2]
+000000010000ab54	cbz	w8, 0x10000ab88
+000000010000ab58	nop
+000000010000ab5c	ldr	x8, #0xd90c ; literal pool symbol address: ___stderrp
+000000010000ab60	ldr	x3, [x8]
+000000010000ab64	adr	x0, #0xb965 ; literal pool for: "Second underflow occured.\n"
+000000010000ab68	nop
+000000010000ab6c	mov	w1, #0x1a
+000000010000ab70	mov	w2, #0x1
+000000010000ab74	bl	0x100011d70 ; symbol stub for: _fwrite
+000000010000ab78	add	x1, sp, #0x4e0
+000000010000ab7c	mov	x0, x20
+000000010000ab80	mov	w2, #0x240
+000000010000ab84	bl	0x100011e80 ; symbol stub for: _memcpy
+000000010000ab88	ldrb	w8, [x24, #0x2]

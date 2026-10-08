@@ -1,0 +1,2 @@
+implementation,M,N,K,calls,seconds,average_gflops,checksum,threads,requested_threads,schedule,BM,BN,BK,MR,NR,unroll
+microkernel,512,512,512,933,10.005274167,25.0318258418,-6048.65486967,1,1,none,32,128,32,4,4,1

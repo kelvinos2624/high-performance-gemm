@@ -1,0 +1,2 @@
+implementation,M,N,K,calls,seconds,average_gflops,checksum,threads,requested_threads,schedule,BM,BN,BK,MR,NR,unroll
+parallel,64,64,64,35611,1.000004125,18.6703429528,164.183051915,2,12,dynamic,32,128,32,0,0,0
