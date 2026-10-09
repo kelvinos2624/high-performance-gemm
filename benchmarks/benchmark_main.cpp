@@ -140,7 +140,7 @@ int main(int argc, char** argv) {
             if (arg == "--help") {
                 std::cout << "Usage: gemm_benchmark [--repetitions COUNT] [--implementation NAME] [SIZE ...]\n"
                              "Defaults: all implementations; 5 repetitions; sizes 64 128 256 512 1024.\n"
-                             "Names: all (six loop orders), naive_ijk ikj jik jki kij kji blocked microkernel parallel\n"
+                             "Names: all (six loop orders), naive_ijk ikj jik jki kij kji blocked microkernel neon_4x4 parallel\n"
                              "Blocked options: --bm M --bn N --bk K (defaults 64 each)\n"
                              "Microkernel options: --mr M --nr N (default 4x4; 2x4,4x4,4x8,8x4,8x8,16x16)\n"
                              "Unrolling: --unroll 1|2|4|8 (microkernel only; >1 requires 4x4)\n"
@@ -210,11 +210,11 @@ int main(int argc, char** argv) {
             throw std::invalid_argument("Unroll 2/4/8 requires a 4x4 microtile");
         if (micro_given && implementation != "microkernel")
             throw std::invalid_argument("Microtile options require --implementation microkernel");
-        if (tile_given && implementation != "blocked" && implementation != "microkernel" && implementation != "parallel")
-            throw std::invalid_argument("Block options require blocked, microkernel, or parallel");
+        if (tile_given && implementation != "blocked" && implementation != "microkernel" && implementation != "parallel" && implementation != "neon_4x4")
+            throw std::invalid_argument("Block options require blocked, microkernel, neon_4x4, or parallel");
         if (shape.m != 0 && !sizes.empty())
             throw std::invalid_argument("Do not mix --shape and square sizes");
-        if (selected.empty() && implementation != "blocked" && implementation != "microkernel" && implementation != "parallel") throw std::invalid_argument("Unknown implementation: " + implementation);
+        if (selected.empty() && implementation != "blocked" && implementation != "microkernel" && implementation != "parallel" && implementation != "neon_4x4") throw std::invalid_argument("Unknown implementation: " + implementation);
         if (profile_wait && !profile_seconds)
             throw std::invalid_argument("--profile-wait requires --profile-seconds");
         if (profile_seconds && (implementation == "all" ||
@@ -226,7 +226,14 @@ int main(int argc, char** argv) {
             std::cout << "implementation,M,N,K,calls,seconds,average_gflops,checksum,threads,requested_threads,schedule,BM,BN,BK,MR,NR,unroll\n";
         else std::cout << "implementation,M,N,K,time_ms,gflops,repetitions,warmups,threads,seed_A,seed_B,checksum,BM,BN,BK,MR,NR,unroll,schedule,requested_threads\n";
         const auto run = [&](std::size_t M, std::size_t N, std::size_t K) {
-            if (implementation == "parallel") {
+            if (implementation == "neon_4x4") {
+                const auto function = [tile](const float* A, const float* B, float* C,
+                                             std::size_t m, std::size_t n, std::size_t k) {
+                    gemm::neon_4x4(A, B, C, m, n, k, tile);
+                };
+                benchmark("neon_4x4", function, M, N, K, repetitions, tile, 4, 4, 1,
+                          1, "none", 1, profile_seconds, profile_wait);
+            } else if (implementation == "parallel") {
                 const auto policy = schedule == "static" ? gemm::Schedule::Static : gemm::Schedule::Dynamic;
                 const auto function = [tile, threads, policy](const float* A, const float* B, float* C,
                                                              std::size_t m, std::size_t n, std::size_t k) {

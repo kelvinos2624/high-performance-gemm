@@ -1,0 +1,19 @@
+{
+  "neon": {
+    "loop_instructions": 13,
+    "scalar_fma": 0,
+    "vector_fma": 4,
+    "loop_stack_references": [],
+    "loop_calls": [],
+    "body_sha256": "a23f2e905350ffbdf0db0eca6b9ac44cadd95713ec72373c82f1485db9322d3b"
+  },
+  "scalar": {
+    "loop_instructions": 26,
+    "scalar_fma": 16,
+    "vector_fma": 0,
+    "loop_stack_references": [],
+    "loop_calls": [],
+    "body_sha256": "2c4771c297f8434917461eb96ab4f748e751a9182e5031d888158588dc49cfb6"
+  },
+  "interpretation": "Static assembly counts on the recorded Apple Clang ARM64 build; not dynamic PMU counts. Inspect raw assembly to verify accumulator lifetime and driver dispatch."
+}

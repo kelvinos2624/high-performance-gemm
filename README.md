@@ -1,10 +1,9 @@
 # GEMM from first principles
 
 A C++17 performance-engineering project that starts with a correct, deliberately
-naive matrix multiplication and advances through measured experiments. This is
-**Milestone 7**: contiguous row-major `float` matrices, a scalar reference with
+naive matrix multiplication and advances through measured experiments. The CPU study now includes explicit NEON SIMD: contiguous row-major `float` matrices, a scalar reference with
 double accumulation, all six loop orders, configurable cache and register blocking,
-controlled K-loop unrolling, compiler/vectorization experiments, multicore row-strip scheduling,
+controlled K-loop unrolling, compiler/vectorization experiments, explicit NEON 4×4, multicore row-strip scheduling,
 correctness tests, and a CSV benchmark.
 The original `naive_ijk` remains the unchanged Milestone 1 kernel.
 
@@ -104,7 +103,7 @@ See [the project charter](docs/project_charter.md),
 the [microkernel experiment](docs/microkernels.md), [unrolling experiment](docs/unrolling.md),
 and [compiler analysis](docs/compiler_analysis.md)
 for access patterns, design choices, cache capacities, and measured results.
-Explicit SIMD remains an optional follow-up; Milestone 7 adds multicore execution.
+The explicit NEON follow-up is complete; see [its measured results](docs/neon.md).
 
 Regenerate the comparison plot with Python 3 and matplotlib (plotting is optional
 and is not a C++ build dependency):
@@ -239,3 +238,31 @@ PYTHONDONTWRITEBYTECODE=1 python3 tests/test_counter_analysis.py
 
 The analysis records six or seven interior samples per case and retains warning
 flags. Cache misses and DRAM bandwidth were not measured.
+
+
+## Explicit NEON 4×4
+
+The AArch64 NEON kernel keeps four vector accumulators across each K block.
+It shares macro traversal and scalar tails with the scalar microkernel. At 512³,
+matched sweeps measured **40.58–41.57 GFLOP/s**, versus **23.80–24.06** for scalar
+4×4 and **29.80–30.39** for blocked GEMM. Gains depend on shape; at 1024³ it is
+only slightly ahead of ikj. See [design, assembly, validation and results](docs/neon.md).
+
+```sh
+cmake -S . -B build/neon-release -DCMAKE_BUILD_TYPE=Release
+cmake --build build/neon-release --parallel
+ctest --test-dir build/neon-release --output-on-failure
+build/neon-release/gemm_benchmark --implementation neon_4x4 --bm 32 --bn 128 --bk 32 512
+python3 scripts/benchmark_neon.py --output results/raw/neon-primary.csv
+python3 scripts/benchmark_neon.py --reverse --output results/raw/neon-reverse.csv
+python3 scripts/inspect_neon.py
+python3 scripts/plot_neon.py
+```
+
+Use new CSV filenames for reruns. `GEMM_ENABLE_NEON=OFF` disables the architecture
+body; unsupported targets still build the portable kernels. `neon_available()`
+reports capability, and explicit NEON requests fail if unavailable. The kernel is
+fixed at 4×4/unroll 1; it accepts block dimensions but no microtile/thread options.
+There is no automatic replacement of existing implementations.
+
+![Explicit NEON comparison](results/plots/neon.png)

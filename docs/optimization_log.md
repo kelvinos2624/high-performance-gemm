@@ -250,3 +250,32 @@ are therefore explicitly provisional. No cache or bandwidth counters were
 collected; no memory-bandwidth bottleneck or misses/FLOP claim is made. Raw
 captures remain unchanged. Profiling/analysis work is delivered; warning-free
 counter validation remains unresolved. See [reviewed report](profiling.md).
+
+
+## Explicit NEON 4×4 — final requested SIMD experiment (2026-10-08)
+
+**Hypothesis:** combine the scalar 4×4 tile's accumulator reuse with four-wide
+FP32 arithmetic to close/exceed its gap to compiler-vectorized blocked GEMM.
+Regression or hot-loop spills would argue against the intended benefit.
+
+**Change:** four row-vector accumulators, one B vector per K step reused by four
+A scalars, four explicit fused vector FMAs. Preserve macro order, scalar tails,
+K sequence, single-thread execution and all older kernels. AArch64 compile check
+and explicit unsupported-build error preserve portability without mislabeled fallback.
+
+**Control:** initial assembly revealed Clang caller-specific driver specialization.
+Move the shared driver to its own TU so both versions call the same generic body
+without LTO. Preserve initial specialized-driver data separately and rerun matched
+sweeps; use final data for reported conclusions.
+
+**Evidence:** K loop has four vector FMAs versus sixteen scalar FMAs, 13 versus
+26 static instructions, accumulators v0–v3, and no hot-loop stack accesses/calls.
+At 512³ NEON reaches 40.58/41.57 GFLOP/s versus scalar 23.80/24.06 and blocked
+30.39/29.80: 1.70–1.73× scalar and 1.34–1.39× blocked. Gains persist on odd shapes.
+At 1024³, NEON beats blocked but is only 1.4%/2.3% above ikj. All-tail 3×5×257
+executes no vector tile and provides no SIMD speedup evidence.
+
+**Validation/decision:** Release, Debug, ASan/UBSan and NEON-disabled builds pass
+all four suites, including new vector-tail/alignment/FMA tests. Both matched
+sweeps pass 48 reference guards. Retain the explicit implementation, without a
+universal dispatch policy or changes to threading. See [full report](neon.md).

@@ -1,4 +1,4 @@
-# Milestone 6 Findings
+# Milestone 8 Findings
 
 Milestone 8 added hardware-counter profiling and a reproducible analysis workflow. It studied the existing kernels; it did not introduce a new GEMM optimization.
 

@@ -9,10 +9,12 @@
 #include <vector>
 
 namespace {
+bool active_neon = false;
 std::size_t active_mr = 4, active_nr = 4, active_unroll = 1;
 void run(const float* A, const float* B, float* C, std::size_t M, std::size_t N,
          std::size_t K, gemm::BlockSize tile) {
-    gemm::microkernel(A, B, C, M, N, K, tile, active_mr, active_nr, active_unroll);
+    if (active_neon) gemm::neon_4x4(A, B, C, M, N, K, tile);
+    else gemm::microkernel(A, B, C, M, N, K, tile, active_mr, active_nr, active_unroll);
 }
 
 void require(bool ok, const char* message) {
@@ -107,6 +109,44 @@ int main() {
             try { gemm::microkernel(nullptr, nullptr, &C, 1, 1, 0, {32,128,32}, 4, 4, u); }
             catch (const std::invalid_argument&) { rejected = true; }
             require(rejected && C == 9, "Invalid unroll must not modify C");
+        }
+        if (gemm::neon_available()) {
+            active_neon = true;
+            suite();
+            for (std::size_t M = 1; M <= 9; ++M)
+                for (std::size_t N = 1; N <= 9; ++N)
+                    for (auto K : {0u, 1u, 3u, 4u, 5u, 17u, 33u})
+                        check(M, N, K, {7, 5, 3});
+            for (std::size_t K = 0; K <= 17; ++K)
+                for (auto BK : {1u, 3u, 4u, 5u, 8u, 31u, 32u, 33u})
+                    check(8, 12, K, {8, 12, BK});
+            // Deliberately offset all three buffers by one float. No 16-byte
+            // alignment is promised by the API; ASan also checks vector bounds.
+            gemm::Matrix A(9, 17), B(17, 7), expected(9, 7);
+            gemm::fill_random(A, 91); gemm::fill_random(B, 92);
+            gemm::reference(A.data(), B.data(), expected.data(), 9, 7, 17);
+            std::vector<float> a(9*17+1), b(17*7+1), c(9*7+1);
+            std::copy_n(A.data(), 9*17, a.data()+1);
+            std::copy_n(B.data(), 17*7, b.data()+1);
+            run(a.data()+1, b.data()+1, c.data()+1, 9, 7, 17, {8, 8, 5});
+            for (std::size_t i = 0; i < 9*7; ++i)
+                require(std::isfinite(c[i+1]) && std::abs(c[i+1]-expected.data()[i]) <=
+                        1e-4f + 1e-4f*std::abs(expected.data()[i]), "unaligned NEON");
+            // Full tile cancellation distinguishes fused FMA from rounded
+            // multiply followed by add, which could incorrectly yield zero.
+            const float e = std::numeric_limits<float>::epsilon();
+            float fa[8], fb[8], fc[16];
+            for (int r = 0; r < 4; ++r) { fa[2*r] = -1; fa[2*r+1] = 1+e; }
+            for (int j = 0; j < 4; ++j) { fb[j] = 1; fb[4+j] = 1-e; }
+            run(fa, fb, fc, 4, 4, 2, {4, 4, 2});
+            for (float x : fc) require(x == std::fma(1+e, 1-e, -1.0f), "NEON must fuse");
+            active_neon = false;
+        } else {
+            float C = 9;
+            bool unavailable = false;
+            try { gemm::neon_4x4(nullptr, nullptr, &C, 1, 1, 0, {4,4,4}); }
+            catch (const std::runtime_error&) { unavailable = true; }
+            require(unavailable && C == 9, "Unavailable NEON must not modify C");
         }
         bool rejected = false;
         try { gemm::microkernel(nullptr, nullptr, nullptr, 0, 0, 0, {32,128,32}, 8, 8, 2); }

@@ -48,6 +48,15 @@ void microkernel(const float* A, const float* B, float* C,
                  BlockSize tile, std::size_t MR, std::size_t NR,
                  std::size_t unroll = 1);
 
+// Fixed 4x4 AArch64 NEON/FMA body, same macrotiles and scalar tails as microkernel.
+// No 16-byte alignment requirement; normal valid float storage is sufficient.
+// Explicit fused arithmetic may round differently from non-fused scalar builds.
+// Availability is a build capability; disabled/unsupported builds throw
+// std::runtime_error before accessing buffers, including empty outputs.
+bool neon_available() noexcept;
+void neon_4x4(const float* A, const float* B, float* C,
+              std::size_t M, std::size_t N, std::size_t K, BlockSize tile);
+
 enum class Schedule { Static, Dynamic };
 
 // Same matrix contract. Positive block dimensions and thread count required.
