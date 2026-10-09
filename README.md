@@ -1,11 +1,30 @@
 # GEMM from first principles
 
-A C++17 performance-engineering project that starts with a correct, deliberately
-naive matrix multiplication and advances through measured experiments. The CPU study now includes explicit NEON SIMD: contiguous row-major `float` matrices, a scalar reference with
-double accumulation, all six loop orders, configurable cache and register blocking,
-controlled K-loop unrolling, compiler/vectorization experiments, explicit NEON 4×4, multicore row-strip scheduling,
-correctness tests, and a CSV benchmark.
-The original `naive_ijk` remains the unchanged Milestone 1 kernel.
+A C++17 GEMM performance-engineering study, from a correct naive baseline through
+loop ordering, cache/register blocking, unrolling, compiler analysis, NEON, and
+multicore execution. The CPU evaluation phase is complete; earlier implementations
+and unsuccessful experiments remain available for comparison.
+
+On Apple M2 Pro at **512³**, the final matched sweeps measured:
+
+| Implementation | GFLOP/s |
+|---|---:|
+| Naive baseline | 1.87–1.88 |
+| Single-thread NEON 4×4 | 39.56–40.75 |
+| Dynamic blocked, 12 workers | 184.28–187.90 |
+| Apple Accelerate, default policy | 2,105.38–2,335.91 |
+
+NEON reached **21–22×** naive throughput; the separate multicore blocked path
+reached **98–101×**, or **7.9–8.9%** of default-policy Accelerate throughput.
+These are two observed sweep medians for one shape, not universal guarantees.
+NEON and multithreading are separate implementations. Accelerate's actual worker
+count was not measured. Hardware-counter findings remain provisional because of
+collector warnings.
+
+Read the [final evaluation and conclusions](docs/final_evaluation.md) for the full
+progression, shape dependence, BLAS comparison, methodology, and remaining limits.
+
+![Final progression graph](results/plots/final-progression.png)
 
 All kernels compute **C = A × B** for A[M,K], B[K,N], and C[M,N]. C is overwritten.
 The hot loops operate on raw pointers without allocation. Buffers must have valid
@@ -266,3 +285,26 @@ fixed at 4×4/unroll 1; it accepts block dimensions but no microtile/thread opti
 There is no automatic replacement of existing implementations.
 
 ![Explicit NEON comparison](results/plots/neon.png)
+
+
+## Reproduce the final evaluation
+
+Apple Accelerate is an optional benchmark comparator, separate from the portable
+kernel library. It is OFF by default. On macOS:
+
+```sh
+cmake -S . -B build/final-release -DCMAKE_BUILD_TYPE=Release -DGEMM_BENCHMARK_ACCELERATE=ON
+cmake --build build/final-release --parallel
+ctest --test-dir build/final-release --output-on-failure
+python3 scripts/evaluate_final.py --output results/raw/final-primary.csv
+python3 scripts/evaluate_final.py --reverse --output results/raw/final-reverse.csv
+python3 scripts/summarize_final.py
+```
+
+Use new CSV filenames when rerunning; evaluation refuses to overwrite raw data.
+The summarizer reads the named final primary/reverse files. Final CSVs prepend
+`case` and `blas_thread_policy` to the ordinary schema. For Accelerate only,
+`threads=0` and `requested_threads=0` mean library-managed/unknown; an environment
+limit is recorded separately and does not certify an observed worker count.
+The comparison keeps the same double-reference guard and C=AB semantics.
+No further optimization is needed for this phase's closure.

@@ -279,3 +279,35 @@ executes no vector tile and provides no SIMD speedup evidence.
 all four suites, including new vector-tail/alignment/FMA tests. Both matched
 sweeps pass 48 reference guards. Retain the explicit implementation, without a
 universal dispatch policy or changes to threading. See [full report](neon.md).
+
+
+## Final evaluation and closure (2026-10-09)
+
+**Scope:** evaluate existing paths together, compare optional Apple Accelerate,
+produce final progression/shape figures, and close the CPU study without adding
+another optimization. Numerical kernels and their defaults are unchanged.
+
+**Change:** add a benchmark-only optional Accelerate SGEMM adapter with row-major
+alpha=1/beta=0 semantics, integer-range/empty handling and contract tests. Add a
+matched ten-configuration/five-shape runner with seven repetitions, reversed-order
+repeat, hashes/flags/environment metadata, coverage checks, ratios and plots.
+Accelerate default and VECLIB_MAXIMUM_THREADS=1-requested policies are distinct;
+actual library thread counts are unknown and are not presented as measured.
+
+**Results:** at 512³, naive reaches 1.87/1.88 GFLOP/s, NEON 40.75/39.56, dynamic
+blocked 187.90/184.28, and default-policy Accelerate 2105.38/2335.91. NEON is
+21.05–21.80× naive; dynamic blocked is 98.03–100.52× naive and 7.89–8.92% of
+Accelerate. At 1024³ dynamic is 93.26–94.41× naive and 6.36–6.97% of Accelerate.
+Scalar/unrolled regressions remain visible. Multicore and NEON are separate
+branches. Short/wide shapes expose row-strip parallelism limits.
+
+**Validation:** enabled/disabled Release builds pass all five suites. All 100
+full-sweep guards pass. A short/wide unroll outlier is retained; twelve targeted
+follow-up cases pass and do not reproduce its low value. No cause is asserted.
+
+**Conclusion:** substantial speedup over naive is established, as is a large
+remaining vendor-library gap. Cache-miss, bandwidth, peak-efficiency and vendor
+instruction-path explanations are not proven. Prior counter findings retain
+their underflow-warning qualification. The evaluation phase is closed with these
+limits documented in [the final report](final_evaluation.md); no further tuning,
+packing, SIMD/thread combination or takeaways edits were made.
